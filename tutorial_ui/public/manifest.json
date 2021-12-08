@@ -1,0 +1,14 @@
+{
+  "short_name": "CloudKommand Sample App",
+  "name": "CloudKommand Sample App",
+  "icons": [
+    {
+      "src": "cloudkommand_logo.svg",
+      "type": "image/svg"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#080A26",
+  "background_color": "#080A26"
+}
