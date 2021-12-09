@@ -1,7 +1,15 @@
 {
     "components": {
         "tutorial_ui": {
-            "type": "@reactapp.spa"
+            "type": "@reactapp.spa",
+            "bundler": "webpack",
+            "config":{
+                "path":"src/config/config.js",
+                "data": {
+                    "cloudkommand_api": "https://fdvs8qnsue.execute-api.us-east-1.amazonaws.com/live/api/v1",
+                    "backend_api": "@tutorial_api:props.api_endpoint"
+                }
+            }
         },
         "tutorial_table": {
             "type": "@dynamodb.table"
