@@ -12,7 +12,7 @@ import {
   faArrowRight,
   faBars, faCircle, faEllipsisH, faEllipsisV, faTicketAlt, faTimes
 } from "@fortawesome/free-solid-svg-icons";
-import { get_apigw_cfg } from 'config/apigw.js'
+import { get_cfg } from 'config/config.js'
 import useFetch from 'use-http'
 import AceEditor from 'react-ace';
 import 'brace/mode/json';
@@ -20,8 +20,8 @@ import 'brace/theme/vibrant_ink';
 import 'brace/theme/dracula';
 
 
-const BACKEND_API_BASE_URL = get_apigw_cfg().backend_api_endpoint + "/api/v1"
-const CLOUDKOMMAND_EXTENSION_COUNTER_URL = "https://fdvs8qnsue.execute-api.us-east-1.amazonaws.com/live/api/v1"
+const BACKEND_API_BASE_URL = get_cfg().backend_api_endpoint + "/api/v1"
+const CLOUDKOMMAND_API_URL = "https://api.cloudkommand.com/api/v1"
 const CLOUDKOMMAND_DOCUMENTATION_URL = "https://cloudkommand.com/documentation"
 const CLOUDKOMMAND_LANDING_PAGE_URL = "https://cloudkommand.com"
 const DISCORD_CHANNEL_URL = "https://discord.com/channels/883179780575477821"
@@ -178,7 +178,7 @@ export function GeneralFooter() {
 };
 
 function CloudKommandExtensionSection () {
-    const { get, post, response, loading, error } = useFetch(`${CLOUDKOMMAND_EXTENSION_COUNTER_URL}`)
+    const { get, post, response, loading, error } = useFetch(`${CLOUDKOMMAND_API_URL}`)
     const [ extensionsDeployed, setExtensionsDeployed ] = useState(null)
 
     async function callExtensionsDeployedCounter() {
@@ -191,7 +191,7 @@ function CloudKommandExtensionSection () {
     },[])
   
     console.log(extensionsDeployed)
-    return <>{extensionsDeployed}</>
+    return <div className="body_first_section_content_column_extensions_deployed_counter">{extensionsDeployed ? extensionsDeployed.the_count.toLocaleString(navigator.language, { minimumFractionDigits: 0 }) : ""}</div>
 }
 
 export default function Landing() {
@@ -208,9 +208,9 @@ export default function Landing() {
         if (response.ok) setClickCounter(click_counter_response)
     }
 
-    // useEffect(()=>{
-    //     callClickCounter()
-    // },[])
+    useEffect(()=>{
+        callClickCounter()
+    },[])
   
     console.log(clickCounter)
 
@@ -226,76 +226,106 @@ export default function Landing() {
             :<></>
             }
             <div className="body_first">
-            <div className="container">
-                <div className="bd_intro_container">
-                <div className="bd_intro_container_items_headliner" >
-                    <img className="bd_intro_container_items_headliner_image" onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
-                    <div className="bd_intro_container_items_headliner_inner_text">CloudKommand Sample UI</div>
-                </div>
+              <div className="container">
+                  <div className="bd_intro_container">
+                  <div className="bd_intro_container_items_headliner" >
+                      <img className="bd_intro_container_items_headliner_image" onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
+                      <div className="bd_intro_container_items_headliner_inner_text">CloudKommand Sample UI</div>
+                  </div>
+                  <div className="body_first_section_content">
+                    <div className="body_first_section_content_column">
+                      <div className="body_first_section_content_column_header_container">
+                        <div className="body_first_section_content_column_header_items">
+                          <div className="body_first_section_content_column_header_additional_text"><span className="emphasis"># of Extensions Deployed with</span></div>
+                          <div className="body_first_section_header_logo_item">
+                            <img className="body_first_section_content_column_header_logo"onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
+                            <div className="body_first_section_content_column_header_items_logo_text">CloudKommand</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div><CloudKommandExtensionSection /></div>
+                    </div>
+                    <div className="body_first_section_content_column">
+                      {/* <div className="body_first_section_content_column_header_container">
+                        <div className="body_first_section_content_column_header_items">
+                        <div className="body_first_section_content_column_header_additional_text">Talk to your API!</div>
+                        </div>
+                      </div> */}
+                      <div className="body_first_section_content_column_ping_button">Ping Your API!</div>
+                      <div className="body_first_section_content_column_api_ping_counter">Times API Pinged: &nbsp;<span className="bright">{`${clickCounter}`}</span></div>
+                    </div>
+                  </div>
 
-                <div className="bd_intro_container_items_extra_emphasis"><span className="emphasis">Effortless deployments.</span></div>
-                <div className={width < 1000 ? "bd_intro_container_items_container_column": "bd_intro_container_items_container_row"}>
-                    <div className="bd_intro_container_items">Managed infrastructure.</div>
-                    <div className="bd_intro_container_items">Always free.</div>
-                    <div className="bd_intro_container_items">Deploy your first app in 5 minutes.</div>
-                    <CloudKommandExtensionSection />
-                </div>
-                <div className="bd_intro_container_items_button" onClick={()=>{navigate("/login")}}>
-                    Get Started Now &nbsp;
-                    <FontAwesomeIcon icon={faArrowRight} />
-                </div>
-                {/* <div className="bd-video-wrapper">
-                    <iframe className="bd-video-content" frameborder="0" allowfullscreen="allowfullscreen"
-                    src="https://www.youtube.com/embed/jqckyGTAdiY?start=0&autoplay=1&mute=1&loop=1?controls=1">
-                    </iframe>
-                </div> */}
-                </div>
-            </div>
+                  {/* <div className="bd_intro_container_items_extra_emphasis"><span className="emphasis">Effortless deployments.</span></div>
+                  <div className={width < 1000 ? "bd_intro_container_items_container_column": "bd_intro_container_items_container_row"}>
+                      <div className="bd_intro_container_items">Managed infrastructure.</div>
+                      <div className="bd_intro_container_items">Always free.</div>
+                      <div className="bd_intro_container_items">Deploy your first app in 5 minutes.</div>
+                      <CloudKommandExtensionSection />
+                  </div>
+                  <div className="bd_intro_container_items_button" onClick={()=>{navigate("/login")}}>
+                      Get Started Now &nbsp;
+                      <FontAwesomeIcon icon={faArrowRight} />
+                  </div> */}
+                  {/* <div className="bd-video-wrapper">
+                      <iframe className="bd-video-content" frameborder="0" allowfullscreen="allowfullscreen"
+                      src="https://www.youtube.com/embed/jqckyGTAdiY?start=0&autoplay=1&mute=1&loop=1?controls=1">
+                      </iframe>
+                  </div> */}
+                  </div>
+              </div>
             </div>
         </div>
         <div className="section_dark">
             <div className="body_first">
             <div className="container">
                 <div className="landing_overview_horizontal_divider"></div>
-                <div className={width > 990 ? "landing_overview_content_row" : "landing_overview_content_row_flip"}>
-                <div className={width > 990 ? "landing_overview_content_row_item" : "landing_overview_content_row_item_flip"}>
-                    <div className="landing_overview_content_header">Develop</div>
-                    <div className="landing_overview_content_first_line">Use our powerful Extensions to whisk away infrastructure code.</div>
-                    <div className="landing_overview_content_second_description">Declare full-blown apps and their relationships through simple abstract syntax in JSON.</div>
-                    <div className="landing_overview_content_first_line">Develop directly against the cloud. </div>
-                    <div className="landing_overview_content_second_description">Easy configuration, managed deployment, and infrastructure sandboxing means developers can now test all their ideas in the cloud instead of praying they work when finally deployed.</div>
-                    <div className="landing_overview_content_first_line">Extend your use-cases and workflow with Extensions. </div>
-                    <div className="landing_overview_content_second_description">Use our rapidly growing open-source library of powerful Extensions. Or contribute to the community by easily rolling your own!</div>
-                </div>
-                <div className={width > 990 ? "landing_overview_content_row_item" : "landing_overview_content_row_item_flip"}>
-                    <AceEditor
-                    placeholder="Edit your component json here"
-                    mode="json"
-                    name="definition_edits"
-                    id="definition_edits"
-                    theme="vibrant_ink"
-                    value={demo_text || ""}
-                    highlightActiveLine={true}
-                    width={width > 990? "100%" : width > 760 ? "600px": "400px"}
-                    height={width > 990? "500px" : width > 760 ? "600px": "400px"}
-                    editorProps={{ $blockScrolling: true }}
-                    // focus={true}
-                    />
-                </div>
+                <div className="landing_overview_headliner_container">
+                  <div className="landing_overview_headliner_container_items" >
+                    <div className="landing_overview_headliner_items_inner_text_secondary">More About</div>
+                      <img className="landing_overview_headliner_items_image" onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
+                      <div className="landing_overview_headliner_items_inner_text">CloudKommand</div>
+                  </div>
                 </div>
                 <div className={width > 990 ? "landing_overview_content_row" : "landing_overview_content_row_flip"}>
-                <div className={width > 990 ? "landing_overview_content_row_item" : "landing_overview_content_row_item_flip"}>
-                    <img className="deployment_screenshot" src={CompleteDeploymentScreenshot}/>
+                  <div className={width > 990 ? "landing_overview_content_row_item" : "landing_overview_content_row_item_flip"}>
+                      <div className="landing_overview_content_header">Develop</div>
+                      <div className="landing_overview_content_first_line">Use our powerful Extensions to whisk away infrastructure code.</div>
+                      <div className="landing_overview_content_second_description">Declare full-blown apps and their relationships through simple abstract syntax in JSON.</div>
+                      <div className="landing_overview_content_first_line">Develop directly against the cloud. </div>
+                      <div className="landing_overview_content_second_description">Easy configuration, managed deployment, and infrastructure sandboxing means developers can now test all their ideas in the cloud instead of praying they work when finally deployed.</div>
+                      <div className="landing_overview_content_first_line">Extend your use-cases and workflow with Extensions. </div>
+                      <div className="landing_overview_content_second_description">Use our rapidly growing open-source library of powerful Extensions. Or contribute to the community by easily rolling your own!</div>
+                  </div>
+                  <div className={width > 990 ? "landing_overview_content_row_item" : "landing_overview_content_row_item_flip"}>
+                      <AceEditor
+                      placeholder="Edit your component json here"
+                      mode="json"
+                      name="definition_edits"
+                      id="definition_edits"
+                      theme="vibrant_ink"
+                      value={demo_text || ""}
+                      highlightActiveLine={true}
+                      width={width > 990? "100%" : width > 760 ? "600px": "400px"}
+                      height={width > 990? "500px" : width > 760 ? "600px": "400px"}
+                      editorProps={{ $blockScrolling: true }}
+                      // focus={true}
+                      />
+                  </div>
                 </div>
-                <div className={width > 990 ? "landing_overview_content_row_item" : "landing_overview_content_row_item_flip"}>
-                    <div className="landing_overview_content_header">Deploy</div>
-                    <div className="landing_overview_content_first_line">FAST deployment.</div>
-                    <div className="landing_overview_content_second_description">Automatically managed parallel infrastructure deployment that’s optimized for speed and provides a live log feed of everything that’s happening.</div>
-                    <div className="landing_overview_content_first_line">Fully managed deployment.</div>
-                    <div className="landing_overview_content_second_description">Infrastructure changes are managed. Deploy-order is managed. Infrastructure clash avoidance is managed. And you deploy with a single click of a button.</div>
-                    <div className="landing_overview_content_first_line">View live infrastructure.</div>
-                    <div className="landing_overview_content_second_description">We provide links to every piece of infrastructure you deploy. View it in real-time in the cloud or link directly to its live log feed to check in on your app. </div>
-                </div>
+                <div className={width > 990 ? "landing_overview_content_row" : "landing_overview_content_row_flip"}>
+                  <div className={width > 990 ? "landing_overview_content_row_item" : "landing_overview_content_row_item_flip"}>
+                      <img className="deployment_screenshot" src={CompleteDeploymentScreenshot}/>
+                  </div>
+                  <div className={width > 990 ? "landing_overview_content_row_item" : "landing_overview_content_row_item_flip"}>
+                      <div className="landing_overview_content_header">Deploy</div>
+                      <div className="landing_overview_content_first_line">FAST deployment.</div>
+                      <div className="landing_overview_content_second_description">Automatically managed parallel infrastructure deployment that’s optimized for speed and provides a live log feed of everything that’s happening.</div>
+                      <div className="landing_overview_content_first_line">Fully managed deployment.</div>
+                      <div className="landing_overview_content_second_description">Infrastructure changes are managed. Deploy-order is managed. Infrastructure clash avoidance is managed. And you deploy with a single click of a button.</div>
+                      <div className="landing_overview_content_first_line">View live infrastructure.</div>
+                      <div className="landing_overview_content_second_description">We provide links to every piece of infrastructure you deploy. View it in real-time in the cloud or link directly to its live log feed to check in on your app. </div>
+                  </div>
                 </div>
             </div>
             </div>

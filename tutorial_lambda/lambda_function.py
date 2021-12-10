@@ -21,7 +21,7 @@ def lambda_handler(event, context):
 
     item = remove_ddb_meta(response.get("Attributes")) if response else None
 
-    return f"You've clicked this endpoint {item.get('scoress')} times"
+    return item.get('scoress')
 
 def add_ddb_meta(obj, skip_this_level=True):
     """Adds ddb meta to an object"""
