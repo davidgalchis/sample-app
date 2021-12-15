@@ -1,5 +1,6 @@
 import boto3
 import os
+import json
 
 
 
@@ -21,7 +22,17 @@ def lambda_handler(event, context):
 
     item = remove_ddb_meta(response.get("Attributes")) if response else None
 
-    return item.get('scoress')
+    final_response = {
+        "statusCode":200,
+        "headers": {
+            "Access-Control-Allow-Headers" : "Authorization,Content-Type,x-amz-date,x-amzm-header,x-api-key,x-apigateway-header",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*"
+        },
+        "body": {"click_counter": f"{item.get('scoress')}"}
+    }
+
+    return final_response
 
 def add_ddb_meta(obj, skip_this_level=True):
     """Adds ddb meta to an object"""
