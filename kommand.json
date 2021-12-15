@@ -18,7 +18,8 @@
             "type": "@apigateway.api",
             "resources": {
                 "/{proxy+}": {
-                    "ANY": "@tutorial_lambda:props.arn"
+                    "ANY": "@tutorial_lambda:props.arn",
+                    "OPTIONS": "@tutorial_lambda:props.arn"
                 }
             },
             "cors_enabled": true
