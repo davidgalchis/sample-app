@@ -251,7 +251,7 @@ export default function Landing() {
                         <div className="body_first_section_content_column_header_additional_text">Talk to your API!</div>
                         </div>
                       </div> */}
-                      <div className="body_first_section_content_column_ping_button">Ping Your API!</div>
+                      <div className="body_first_section_content_column_ping_button">Ping Your API</div>
                       <div className="body_first_section_content_column_api_ping_counter">Times API Pinged: &nbsp;<span className="bright">{`${clickCounter}`}</span></div>
                     </div>
                   </div>
