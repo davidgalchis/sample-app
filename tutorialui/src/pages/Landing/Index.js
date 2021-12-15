@@ -204,7 +204,7 @@ export default function Landing() {
     const [ clickCounter, setClickCounter ] = useState(null)
 
     async function callClickCounter() {
-        const click_counter_response = await get(`/api/v1/click_counter`)
+        const click_counter_response = await get(`/click_counter`)
         if (response.ok) setClickCounter(click_counter_response)
     }
 
