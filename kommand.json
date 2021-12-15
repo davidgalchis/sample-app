@@ -3,7 +3,6 @@
         "tutorialui": {
             "type": "@reactapp.spa",
             "bundler": "webpack",
-            "build_container_size":"large",
             "config":{
                 "path":"src/config/config.js",
                 "data": {
