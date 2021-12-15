@@ -12,7 +12,7 @@ import {
   faArrowRight,
   faBars, faCircle, faEllipsisH, faEllipsisV, faTicketAlt, faTimes
 } from "@fortawesome/free-solid-svg-icons";
-import { get_cfg } from 'config/config.js'
+import { get_config } from 'config/config.js'
 import useFetch from 'use-http'
 import AceEditor from 'react-ace';
 import 'brace/mode/json';
@@ -20,7 +20,7 @@ import 'brace/theme/vibrant_ink';
 import 'brace/theme/dracula';
 
 
-const BACKEND_API_BASE_URL = get_cfg().backend_api_endpoint + "/api/v1"
+const BACKEND_API_BASE_URL = get_config().backend_api_endpoint + "/api/v1"
 const CLOUDKOMMAND_API_URL = "https://api.cloudkommand.com/api/v1"
 const CLOUDKOMMAND_DOCUMENTATION_URL = "https://cloudkommand.com/documentation"
 const CLOUDKOMMAND_LANDING_PAGE_URL = "https://cloudkommand.com"
