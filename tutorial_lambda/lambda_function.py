@@ -27,7 +27,8 @@ def lambda_handler(event, context):
             "headers": {
                 "Access-Control-Allow-Headers" : "Authorization,Content-Type,x-amz-date,x-amzm-header,x-api-key,x-apigateway-header",
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "*"
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+                'Content-Type': 'application/json'
             },
             "body": json.dumps({"click_counter": f"{item.get('scoress')}"})
         }

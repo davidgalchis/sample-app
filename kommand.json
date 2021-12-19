@@ -20,7 +20,6 @@
             "type": "@apigateway.api",
             "resources": {
                 "/{proxy+}": {
-                    "ANY": "@tutorial_lambda:props.arn",
                     "OPTIONS": "@tutorial_lambda:props.arn",
                     "GET": "@tutorial_lambda:props.arn"
                 }
