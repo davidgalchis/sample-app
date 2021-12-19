@@ -21,10 +21,10 @@ import 'brace/theme/dracula';
 
 
 const BACKEND_API_BASE_URL = get_config().backend_api_endpoint + "/api/v1"
-const CLOUDKOMMAND_API_URL = "https://api.cloudkommand.com/api/v1"
-const CLOUDKOMMAND_DOCUMENTATION_URL = "https://cloudkommand.com/documentation"
-const CLOUDKOMMAND_LANDING_PAGE_URL = "https://cloudkommand.com"
-const DISCORD_CHANNEL_URL = "https://discord.com/channels/883179780575477821"
+const CLOUDKOMMAND_API_URL = get_config().cloudkommand_api + "/api/v1"
+const CLOUDKOMMAND_DOCUMENTATION_URL = get_config().cloudkommand_url + "/documentation"
+const CLOUDKOMMAND_LANDING_PAGE_URL = get_config().cloudkommand_url
+const DISCORD_CHANNEL_URL = get_config().discord_channel_url
 
 const demo_text = `{
     "components": {

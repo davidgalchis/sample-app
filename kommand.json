@@ -6,8 +6,10 @@
             "config":{
                 "path":"src/config/config.js",
                 "data": {
-                    "cloudkommand_api": "https://fdvs8qnsue.execute-api.us-east-1.amazonaws.com/live/api/v1",
-                    "backend_api_endpoint": "@tutorial_api:props.api_endpoint"
+                    "cloudkommand_api": "https://api.cloudkommand.com",
+                    "backend_api_endpoint": "@tutorial_api:props.api_endpoint",
+                    "discord_channel_url": "https://discord.com/channels/883179780575477821",
+                    "cloudkommand_url": "https://cloudkommand.com"
                 }
             }
         },
