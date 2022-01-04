@@ -1,0 +1,68 @@
+$enable-responsive-font-sizes: true;
+
+
+$white:         #fff !default;
+$gray-100:      #f8f9fa !default;
+$gray-200:      #e9ecef !default;
+$gray-300:      #dee2e6 !default;
+$gray-400:      #ced4da !default;
+$gray-500:      #adb5bd !default;
+$gray-600:      #6c757d !default;
+$gray-700:      #495057 !default;
+$gray-800:      #343a40 !default;
+$gray-900:      #212529 !default;
+$black:         #000 !default;
+$blue:          #0066CC !default;
+$indigo:        #6610f2 !default;
+$purple:        #6f42c1 !default;
+$pink:          #e83e8c !default;
+$red:           #dc3545 !default;
+$orange:        #fd7e14 !default;
+$yellow:        #ffc107 !default;
+$green:         #28a745 !default;
+$teal:          #20c997 !default;
+$cyan:          #17a2b8 !default;
+$primary:       $blue !default;
+$secondary:     $gray-600 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
+
+$p-darkest:     #1D1626 !default; // dark overlays
+$p-darkest-80:  rgba(29,22,38,.8) !default; // dark overlays grayed out
+$p-darkest-20:  rgba(29,22,38,.2) !default; // dark overlays grayed out
+$p-dark:        #080A26 !default; // background color
+$p-less-dark:   #212640 !default; // lighter overlay
+$p-less-dark-80:   rgba(33,38,64,.8); // contrast to the main area
+// $p-gray-dark:   #21262d !default;
+// $p-gray-darker: #30363d !default;
+$p-gray-blue:   #4C5772 !default; // dividers, especially on lighter overlays
+$p-gray-blue-20:   rgba(158, 161, 167, 0.2) !default; // a grayed out version of it
+$p-gray-bright: #B7B7B7 !default; // classic grayed-out color
+$p-bright:   #F1F2F3 !default; // classic white
+$p-green-bright:#4DE489 !default; // good, success
+$p-green-muted: #53AF77 !default; // non-focus good/success
+$p-orange-bright:#c56730 !default;// change, important, action
+$p-orange-muted:#D97E4A !default; // not used, presumably non-focused change or action
+$p-yellow:      #FFE200 !default; // live, current status highlight
+$p-alternate-yellow: rgba(255, 178, 0, 0.8) !default;
+$p-red:         #B62626 !default; // error, something went wrong.
+$color-scale-red-1: #ffc1ba;
+$color-scale-red-2: #ffa198;
+$color-scale-red-3: #ff7b72;
+$color-scale-red-4: #f85149;
+$color-scale-red-5: #da3633;
+$color-scale-red-6: #b62324;
+$color-scale-red-7: #8e1519;
+$color-scale-red-8: #67060c;
+$color-scale-red-9: #490202;
+
+$font-family-sans-serif: 'Nunito Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+// @font-face {
+//     font-family: 'ModerneSans';
+//     src: URL('Moderne Sans Font.ttf') format('truetype');
+//   }

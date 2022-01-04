@@ -1,27 +1,41 @@
 import boto3
 import os
-
-
+import json
+import traceback
+import json
 
 def lambda_handler(event, context):
-
-    table_name = lambda_env("table_name")
-
-    dynamodb = boto3.client("dynamodb")
-
-    response = dynamodb.update_item(
-            TableName=table_name,
-            Key=add_ddb_meta({"pkey": "dkf"}),
-            UpdateExpression = "ADD scoress :val",
-            ExpressionAttributeValues = add_ddb_meta({
-                ":val": 1
-                }),
-            ReturnValues = "ALL_NEW"
-        )
-
-    item = remove_ddb_meta(response.get("Attributes")) if response else None
-
-    return f"You've clicked this endpoint {item.get('scoress')} times"
+    try:
+        table_name = lambda_env("table_name")
+    
+        dynamodb = boto3.client("dynamodb")
+    
+        response = dynamodb.update_item(
+                TableName=table_name,
+                Key=add_ddb_meta({"pkey": "dkf"}),
+                UpdateExpression = "ADD scoress :val",
+                ExpressionAttributeValues = add_ddb_meta({
+                    ":val": 1
+                    }),
+                ReturnValues = "ALL_NEW"
+            )
+    
+        item = remove_ddb_meta(response.get("Attributes")) if response else None
+    
+        final_response = {
+            "statusCode":200,
+            "headers": {
+                "Access-Control-Allow-Headers" : "Authorization,Content-Type,x-amz-date,x-amzm-header,x-api-key,x-apigateway-header",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+                'Content-Type': 'application/json'
+            },
+            "body": json.dumps({"click_counter": f"{item.get('scoress')}"})
+        }
+    
+        return final_response
+    except:
+        print(traceback.format_exc())
 
 def add_ddb_meta(obj, skip_this_level=True):
     """Adds ddb meta to an object"""
