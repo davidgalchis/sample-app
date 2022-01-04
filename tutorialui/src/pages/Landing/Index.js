@@ -253,7 +253,7 @@ export default function Landing() {
                       <div className="body_first_section_content_column_header_container">
                         <div className="body_first_section_content_column_header_title"><span className="bright">Did you know?</span></div>
                         <div className="body_first_section_content_column_header_items">
-                          <div className="body_first_section_content_column_header_additional_text"><span className="emphasis">The # of extensions deployed with</span></div>
+                          <div className="body_first_section_content_column_header_additional_text"><span className="emphasis">The # of extensions users deployed with</span></div>
                           <div className="body_first_section_header_logo_item">
                             <img className="body_first_section_content_column_header_logo"onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
                             <div className="body_first_section_content_column_header_items_logo_text">CloudKommand <span className="emphasis">:</span></div>
