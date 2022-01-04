@@ -1,0 +1,95 @@
+
+$app_header_height: 125px;
+$app_footer_height: 200px;
+$app_background_color: $p-dark;
+// $app_header_color: linear-gradient(225deg, #3D4859 0%, #1F2831 100%);
+// $app_sidebar_color: linear-gradient(0deg, #3D4859 0%, #1F2831 100%);
+$app_margin_top: 30px;
+
+// html, body {
+//   height: 100%;
+// }
+
+.construction_zone {
+  background-color: $app_background_color;
+  min-height: 100vh;
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+
+  .header_bar {
+    color: $p-bright;
+    background-color: $app_background_color;
+    &-img {
+      height:45px;
+      margin:25px;
+      margin-right:0px;
+      margin-left:50px;
+      cursor:pointer;
+    }
+  }
+  .construction_zone_body {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex:1;
+    flex-grow:1;
+    flex-direction:column;
+    .title_bar {
+      display:flex;
+      flex-direction:row;
+      width: 70%;
+      justify-content: center;
+      align-items:center;
+    }
+    .title_bar_item {
+      display:flex;
+      flex:1;
+      justify-content:flex-start;
+    }
+    .title_bar_item_large {
+      display:flex;
+      flex:3;
+      justify-content: center;
+    }
+    .title_bar_button {
+      border: 0px solid $p-bright;
+      background-color: transparent;
+      border-radius: .5rem;
+      padding: 8px;
+    }
+    .title_bar_icon {
+      color:$p-bright;
+      cursor:pointer;
+    }
+    .title_bar_text {
+      color:$p-bright;
+      font-weight: bold;
+      font-size: 1.7rem;
+    }
+    .title_bar_subtext {
+      color: $p-bright;
+      width: 50%;
+      font-size: 18px;
+      margin-top: 16px;
+      margin-bottom: 24px;
+      text-align:center;
+    }
+    .body_image {
+      width: 70%;
+    }
+  }
+
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+    flex-grow:1;
+  }
+}
+
+
+.emphasis {
+  color:$p-orange-bright;
+}
