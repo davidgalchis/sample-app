@@ -229,30 +229,38 @@ export default function Landing() {
               <div className="container">
                   <div className="bd_intro_container">
                   <div className="bd_intro_container_items_headliner" >
-                      <img className="bd_intro_container_items_headliner_image" onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
-                      <div className="bd_intro_container_items_headliner_inner_text">CloudKommand Sample UI</div>
+                      <div className="bd_intro_container_items_headliner_item">
+                        <img className="bd_intro_container_items_headliner_image" onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
+                        <div className="bd_intro_container_items_headliner_inner_text">CloudKommand</div>
+                      </div>
+                      <div className="bd_intro_container_items_headliner_item">
+                        <div className="bd_intro_container_items_headliner_inner_text">Sample UI</div>
+                      </div>
                   </div>
                   <div className="body_first_section_content">
-                    <div className="body_first_section_content_column">
-                      <div className="body_first_section_content_column_header_container">
-                        <div className="body_first_section_content_column_header_items">
-                          <div className="body_first_section_content_column_header_additional_text"><span className="emphasis"># of Extensions Deployed with</span></div>
-                          <div className="body_first_section_header_logo_item">
-                            <img className="body_first_section_content_column_header_logo"onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
-                            <div className="body_first_section_content_column_header_items_logo_text">CloudKommand</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div><CloudKommandExtensionSection /></div>
-                    </div>
                     <div className="body_first_section_content_column">
                       {/* <div className="body_first_section_content_column_header_container">
                         <div className="body_first_section_content_column_header_items">
                         <div className="body_first_section_content_column_header_additional_text">Talk to your API!</div>
                         </div>
                       </div> */}
-                      <div className="body_first_section_content_column_ping_button">Ping Your API</div>
-                      <div className="body_first_section_content_column_api_ping_counter">Times API Pinged: &nbsp;<span className="bright">{`${clickCounter}`}</span></div>
+                      <div className="body_first_section_content_column_header_title"><span className="bright">Try out your live API now!</span></div>
+                      <div className="body_first_section_content_column_ping_button" onClick={callClickCounter}>Ping Your API</div>
+                      <div className="body_first_section_content_column_api_ping_counter">Times API Pinged: &nbsp;<span className="bright">{`${clickCounter ? clickCounter.click_counter : ""}`}</span></div>
+                    </div>
+                    <div className="landing_overview_horizontal_divider"></div>
+                    <div className="body_first_section_content_column">
+                      <div className="body_first_section_content_column_header_container">
+                        <div className="body_first_section_content_column_header_title"><span className="bright">Did you know?</span></div>
+                        <div className="body_first_section_content_column_header_items">
+                          <div className="body_first_section_content_column_header_additional_text"><span className="emphasis">The # of extensions deployed with</span></div>
+                          <div className="body_first_section_header_logo_item">
+                            <img className="body_first_section_content_column_header_logo"onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
+                            <div className="body_first_section_content_column_header_items_logo_text">CloudKommand <span className="emphasis">:</span></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div><CloudKommandExtensionSection /></div>
                     </div>
                   </div>
 
@@ -282,9 +290,13 @@ export default function Landing() {
                 <div className="landing_overview_horizontal_divider"></div>
                 <div className="landing_overview_headliner_container">
                   <div className="landing_overview_headliner_container_items" >
-                    <div className="landing_overview_headliner_items_inner_text_secondary">More About</div>
+                    <div className="landing_overview_headliner_container_item_set">
+                      <div className="landing_overview_headliner_items_inner_text_secondary">More About</div>
+                    </div>
+                    <div className="landing_overview_headliner_container_item_set">
                       <img className="landing_overview_headliner_items_image" onClick={()=>{navigate("/")}} src={CloudKommandLogo}/>
                       <div className="landing_overview_headliner_items_inner_text">CloudKommand</div>
+                    </div>
                   </div>
                 </div>
                 <div className={width > 990 ? "landing_overview_content_row" : "landing_overview_content_row_flip"}>

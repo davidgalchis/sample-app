@@ -289,9 +289,19 @@ html {
     margin-top: 15px;
     display:flex;
     flex-direction: row;
+    flex-wrap:wrap; 
+    justify-content: center;
+    align-items:center;
+    text-align:center;
+  }
+  .bd_intro_container_items_headliner_item {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
     justify-content: flex-start;
     align-items:center;
     text-align:center;
+    padding:5px;
   }
   .bd_intro_container_items_headliner_inner_text {
     font-size: 2rem;
@@ -312,7 +322,7 @@ html {
   }
   .body_first_section_content {
     display:flex;
-    flex-direction:row;
+    flex-direction:column;
   }
   .body_first_section_content_column {
     display:flex;
@@ -320,6 +330,7 @@ html {
     flex:1;
     justify-content: center;
     align-items: center;
+    margin-bottom: 30px;
   }
   .body_first_section_content_column_header_container {
     display:flex;
@@ -331,7 +342,7 @@ html {
     margin-bottom: -10px;
     margin-top: 30px;
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items:center;
     text-align:center;
@@ -347,10 +358,18 @@ html {
     color:$p-bright;
     margin-top: 4px;
   }
+  .body_first_section_content_column_header_title {
+    font-size: 1.5rem;
+    font-weight:bold;
+    color:$p-bright;
+    white-space: nowrap;
+    margin-top: 30px;
+  }
   .body_first_section_content_column_header_additional_text {
     font-size: 1.5rem;
     font-weight:bold;
     color:$p-bright;
+    // white-space: nowrap;
   }
   .body_first_section_content_column_header_logo {
     width:35px;
@@ -399,8 +418,16 @@ html {
     margin-bottom: -10px;
     margin-top: 30px;
     display:flex;
+    flex-wrap:wrap;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items:center;
+    text-align:center;
+  }
+  .landing_overview_headliner_container_item_set {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
     align-items:center;
     text-align:center;
   }
@@ -562,6 +589,7 @@ html {
     width: 100%;
     margin:auto;
     padding: 30px 0px;
+    margin-top:30px;
   }
   .landing_overview_content_row_flip:last-child {
     flex-direction: column-reverse;

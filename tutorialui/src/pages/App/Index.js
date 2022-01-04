@@ -8,7 +8,7 @@ function App() {
 
   const options = {
 		headers: {
-      Authorization: "",
+      "Authorization": "",
       "Content-Type": "application/json"
 		},
     cachePolicy: "no-cache"

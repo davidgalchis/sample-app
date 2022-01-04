@@ -1,6 +1,6 @@
 {
     "components": {
-        "tutorialui": {
+        "tutorial_ui": {
             "type": "@reactapp.spa",
             "bundler": "webpack",
             "config":{
