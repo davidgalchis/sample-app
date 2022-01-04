@@ -24,7 +24,8 @@
                     "GET": "@tutorial_lambda:props.arn"
                 }
             },
-            "cors_enabled": true
+            "cors_enabled": true,
+            "something":"else"
         },
         "tutorial_lambda": {
             "type": "@lambda.function",
