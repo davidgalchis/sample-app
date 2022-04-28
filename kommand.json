@@ -45,7 +45,7 @@
                 "Statement": [{
                     "Sid": "Vis",
                     "Effect": "Allow", 
-                    "Action": [
+                    "Action": [ 
                         "lambda:*",
                         "events:*",
                         "dynamodb:*",
