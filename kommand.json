@@ -61,6 +61,6 @@
         "lambda": "https://github.com/cloudkommand/lambda",
         "dynamodb": "https://github.com/cloudkommand/dynamodb",
         "apigateway": "https://github.com/cloudkommand/apigateway",
-        "reactapp": "https://github.com/davidgalchis/testspa"
+        "testspa": "https://github.com/davidgalchis/testspa"
     }
 }
