@@ -44,7 +44,7 @@
                 "Version": "2012-10-17",
                 "Statement": [{
                     "Sid": "Vis",
-                    "Effect": "Allow",
+                    "Effect": "Allow", 
                     "Action": [
                         "lambda:*",
                         "events:*",
