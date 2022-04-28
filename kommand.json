@@ -3,6 +3,7 @@
         "tutorialui": {
             "type": "@reactapp.spa",
             "bundler": "webpack",
+            "codebuild_runtime_versions": {"nodejs": "10"},
             "config":{
                 "path":"src/config/config.js",
                 "data": {
