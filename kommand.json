@@ -1,7 +1,7 @@
 {
     "components": {
         "tutorialui": {
-            "type": "@reactapp.spa",
+            "type": "@testspa.spa",
             "bundler": "webpack",
             "codebuild_runtime_versions": {"nodejs": "10"},
             "config":{
