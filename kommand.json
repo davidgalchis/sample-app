@@ -4,7 +4,7 @@
             "type": "@testspa.spa",
             "bundler": "webpack",
             "config":{
-                "path":"src/app/config/config.js",
+                "path":"src/app/config/config.ts",
                 "data": {
                     "cloudkommand_api": "https://api.cloudkommand.com",
                     "discord_channel_url": "https://discord.com/channels/883179780575477821",
