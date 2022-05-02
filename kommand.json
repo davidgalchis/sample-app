@@ -1,7 +1,7 @@
 {
     "components": {
         "parfaymaster": {
-            "type": "@testspa.spa",
+            "type": "@angularapp.spa",
             "bundler": "webpack",
             "config":{
                 "path":"src/app/config/config.ts",
@@ -14,6 +14,6 @@
         }
     },
     "repos": {
-        "testspa": "https://github.com/davidgalchis/testspa"
+        "angularapp": "https://github.com/davidgalchis/angularapp"
     }
 }
