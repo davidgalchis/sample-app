@@ -1,0 +1,83 @@
+<ng-container *ngIf="targetUser">
+  <div class="row vh-100 flex-column">
+    <ng-container *ngTemplateOutlet="selectedUserNavTemplate2"></ng-container>
+    <ng-container *ngTemplateOutlet="displayedMessagesTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="inputTemplate"></ng-container>
+  </div>
+</ng-container>
+
+<ng-template #selectedUserNavTemplate2>
+  <div class="bg-3 col-auto">
+    <div class="row align-items-center ps-3 pt-1">
+      <div class="col-auto my-1">
+        <img style="filter: invert(1) contrast(0.5); mix-blend-mode: difference;" src="assets/logo/parfay.svg"
+          width="20px" />
+      </div>
+      <div class="col">
+        {{targetUser?.alias}}
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #selectedUserNavTemplate>
+  <div class="col-auto bg-3">
+    <div class="row align-items-center mt-1">
+      <div class="col-auto my-1">
+        <img style="filter: invert(1) contrast(0.5); mix-blend-mode: difference;" src="assets/logo/parfay.svg"
+          width="20px" />
+      </div>
+      <div class="col">
+        {{targetUser?.alias}}
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #displayedMessagesTemplate>
+  <div class="col" #messageBoxElement style="overflow: auto;">
+    <div class="row">
+      <div class="col g-0">
+        <div class="py-2 my-2 px-3 hover-highlight" *ngFor="let displayedMessage of displayedMessages">
+          <ng-container *ngTemplateOutlet="displayedMessageTemplate; context: { $implicit: displayedMessage }">
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #displayedMessageTemplate let-displayedMessage>
+  <div class="g-2 mb-1 row align-items-end">
+    <div class="col-auto"><span style="font-weight: 500;">{{displayedMessage?.sourceAlias}}</span></div>
+    <div class="col">
+      <sub matTooltip="{{ displayedMessage?.date | date: 'EEEE, MMMM d, y h:mm:ss a'}}">
+        <i>{{displayedMessage?.date | date: 'MMM d, y'}}</i>
+      </sub>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" style="white-space: pre-line;">
+      {{displayedMessage?.message}}
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #inputTemplate>
+  <div class="col-auto">
+    <div class="row g-1 align-items-baseline">
+      <div class="col">
+        <mat-form-field appearance="fill" class="w-100">
+          <textarea matInput #messageBox [placeholder]="'Message ' + targetUser?.alias" cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" (keydown.enter)="$event.preventDefault()"
+            (keyup.enter)="sendMessage(messageBox)"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-auto">
+        <button mat-icon-button matTooltip="Not Implemented Yet! Press [Windows Key + (.)]">
+          <mat-icon>sentiment_very_satisfied</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

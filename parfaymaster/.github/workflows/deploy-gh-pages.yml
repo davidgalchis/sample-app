@@ -1,0 +1,27 @@
+#
+# Builds the docs and deploys to GitHub pages
+#
+# https://github.com/actions/setup-node
+# Using https://github.com/marketplace/actions/angular-deploy-gh-pages-actions
+name: Deploy to Github pages
+
+on:
+  push:
+    #tags:
+    #  - v*
+    branches:
+      - master
+
+jobs:
+  deploy_pages:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy App 🚀
+      uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2 ## replace by latest version without it you will see Expected format {org}/{repo}[/path]@ref. Actual 'AhsanAyaz/angular-deploy-gh-pages-actions',Input string was not in a correct format.
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }} # see the Configuration section for how you can create secrets
+        build_configuration: production # The build environment for the app. please look configurations in your angular.json
+        base_href: /parfay/   # make sure this corresponds to https://<your_username>.github.io/<base_href>/
+        deploy_branch: gh-pages # The branch the action should deploy to.
+        angular_dist_build_folder: dist/parfay # The folder where your project is supposed to be after running ng build by the action.

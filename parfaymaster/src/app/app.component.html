@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-2 vh-100">
+    <div class="row h-100 flex-column">
+      <div class="col-auto bg-0">
+        <div class="row px-2 bg-0 align-items-center">
+          <div class="align-items-center col d-flex justify-content-between">
+            {{myUser?.alias}}
+          </div>
+          <div class="col-auto">
+            <i><button mat-icon-button (click)="selectSettings()">
+              <mat-icon class="material-icons-round">settings</mat-icon>
+            </button></i>
+          </div>
+        </div>
+      </div>
+      <div class="col bg-2" style="overflow: auto">
+        <ng-container *ngTemplateOutlet="usersTemplate"></ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<ng-template #usersTemplate>
+  <div class="p-1">
+    <button mat-flat-button class="mt-2 d-flex w-100" *ngFor="let user of userList" (click)="selectTargetUser(user)"
+      routerLink="/chat/private"
+      [matBadge]="unreadMessages[user.id] || null" matBadgeColor="warn"
+      >{{user.alias}}</button>
+    <!-- [matBadge]="recievedMessages[user.id] && recievedMessages[user.id].length ? recievedMessages[user.id].length : null" matBadgeColor="warn" -->
+  </div>
+</ng-template>

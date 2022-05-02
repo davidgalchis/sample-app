@@ -1,0 +1,80 @@
+/* Tag Styles */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+i {  color:#72767d }
+
+/** Material Theme Styles **/
+
+
+@mixin material-overrides {
+    .mat-form-field-infix { border: none }
+    .mat-input-element { caret-color: auto;  }
+    .mat-form-field-infix { border: none }
+    .mat-badge-content {
+        z-index: 1;
+    }
+    .mat-button-base:hover {
+        filter: brightness(85%);
+    }
+}
+
+.parfay-light-theme {
+    @import './parfay-light-theme.scss';
+    @include material-overrides;
+    background: #F5F5F5;
+    .bg-0 { background: #e0e0e0 }
+    .bg-1 { background: #f5f5f5 }
+    .bg-2 { background: #fafafa }
+    .bg-3 { background: #ffffff }
+}
+
+.parfay-dark-theme {
+    @import './parfay-dark-theme.scss';
+    @include material-overrides;
+    background: #212121;
+    color: #e0e0e0;
+    .bg-0 { background: #000000 }
+    .bg-1 { background: #212121 }
+    .bg-2 { background: #303030 }
+    .bg-3 { background: #424242 }
+}
+
+/** Additional Helper Classes **/
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.vw-100 {
+    width: 100vw;
+}
+
+.vh-100 {
+    height: 100vh;
+}
+
+.hover-highlight:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+/** Scrollbar Styles **/
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-color: transparent;
+    background-color: rgba(0,0,0, 0.1);
+    border: 2px solid transparent
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0, 0.5);
+    border-radius: 8px;
+}

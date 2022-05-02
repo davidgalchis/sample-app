@@ -1,0 +1,76 @@
+<!-- <div>
+  <button mat-button (click)="accordion.openAll()">Expand All</button>
+  <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+</div> -->
+<h1> Settings </h1>
+<mat-accordion multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Profile
+      </mat-panel-title>
+      <mat-panel-description class="justify-content-between">
+        Modify profile information
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row justify-content-between align-items-baseline">
+        <div class="col">
+            <mat-form-field appearance="fill">
+                <!-- <span matPrefix><i>Alias:&nbsp;</i></span> -->
+                <input matInput [(ngModel)]="myUserName">
+                <span matSuffix><i>#{{myUserNumber}}</i></span>
+            </mat-form-field>
+        </div>
+        <div class="col-auto"><i>{{myUser?.id}}</i></div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-auto">
+            <button mat-flat-button color="primary" (click)="saveProfileSettings()">Save</button>
+        </div>
+    </div>
+
+  </mat-expansion-panel>
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Appearance
+      </mat-panel-title>
+      <mat-panel-description class="justify-content-between">
+        Appearance of Parfay
+        <mat-icon>visibility</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-selection-list #themeSelectionList [multiple]="false" (selectionChange)="themeRadioButtonChanged($event)">
+      <mat-list-option value="dark" [selected]="usingDarkTheme">Dark Theme</mat-list-option>
+      <mat-list-option value="light" [selected]="!usingDarkTheme">Light Theme</mat-list-option>
+    </mat-selection-list>
+  </mat-expansion-panel>
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Router
+      </mat-panel-title>
+      <mat-panel-description class="justify-content-between">
+        Ogre Router Settings
+        <mat-icon>router</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
+    </mat-form-field>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-expansion-panel>
+
+</mat-accordion>
+<!-- 
+<button mat-flat-button color="primary" (click)="lightTheme()">Light</button>
+<button mat-flat-button color="accent" (click)="darkTheme()">Dark</button> -->
