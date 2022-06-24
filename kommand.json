@@ -34,7 +34,8 @@
             "timeout": 10,
             "policies": ["@tutorial_policy"],
             "environment_variables": {
-                "table_name": "@tutorial_table:props.name"
+                "table_name": "@tutorial_table:props.name",
+                "test_secret_value": "$test_secret_value"
             }
         },
         "tutorial_policy": {
@@ -56,6 +57,9 @@
             }
         }
     },
+    "secrets": [
+        "test_secret_value"
+    ],
     "repos": {
         "iam": "https://github.com/cloudkommand/iam",
         "lambda": "https://github.com/cloudkommand/lambda",
