@@ -68,8 +68,9 @@
         "unauth_api_lambda": {
             "type": "@lambda.function",
             "description": "Unauthenticated Dogs Mobile App Logic",
-            "timeout": 10,
-            "policies": ["@tutorial_policy"]
+            "memory_size": 256,
+            "timeout": 30,
+            "role": "@role"
         },
         "layer": {
             "type": "@lambda.layer",
