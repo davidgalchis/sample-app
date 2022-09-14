@@ -71,6 +71,11 @@
             "timeout": 10,
             "policies": ["@tutorial_policy"]
         },
+        "layer": {
+            "type": "@lambda.layer",
+            "compatible_runtimes": ["python3.9", "python3.8"],
+            "requirements.txt": true
+        },
         "role": {
             "description": "Dogs Mobile App Lambda Role",
             "policies": [
