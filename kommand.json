@@ -1,58 +1,104 @@
 {
     "components": {
-        "tutorialui": {
-            "type": "@reactapp.spa",
-            "bundler": "webpack",
-            "config":{
-                "path":"src/config/config.js",
-                "data": {
-                    "cloudkommand_api": "https://api.cloudkommand.com",
-                    "backend_api_endpoint": "@tutorial_api:props.endpoint_with_stage",
-                    "discord_channel_url": "https://discord.com/channels/883179780575477821",
-                    "cloudkommand_url": "https://cloudkommand.com"
-                }
-            }
-        },
-        "tutorial_table": {
+        "table": {
             "type": "@dynamodb.table"
         },
-        "tutorial_api": {
+        "bucket": {
+            "type": "@s3.bucket"
+        },
+        "api": {
             "type": "@apigateway.api",
             "resources": {
+                "/api/v1/access": {
+                  "ANY": "@access"
+                },
+                "/api/v1/more_dogs": {
+                  "ANY": "@unauth_api_lambda"
+                },
                 "/{proxy+}": {
-                    "OPTIONS": "@tutorial_lambda:props.arn",
-                    "GET": "@tutorial_lambda:props.arn"
+                  "ANY": [
+                    "@api_lambda:props.arn",
+                    "auth"
+                  ],
+                  "OPTIONS": "@api_lambda:props.arn"
                 }
-            },
+              },
             "cors_enabled": true,
-            "something":"else"
+            "authorizers": {
+                "auth": {
+                  "lambda_arn": "@authorizer:props.arn",
+                  "source": " $request.header.Authorization,$context.path,$context.httpMethod"
+                }
+            }
         },
-        "tutorial_lambda": {
+        "authorizer": {
             "type": "@lambda.function",
-            "description": "CloudKommand Tutorial Lambda",
-            "timeout": 10,
-            "policies": ["@tutorial_policy"],
+            "description": "The authorizer for the API",
             "environment_variables": {
-                "table_name": "@tutorial_table:props.name"
+              "table_arn": "@table:props.arn",
+              "s3_bucket_arn": "@bucket:props.arn"
+            },
+            "layers": [
+              "@layer"
+            ],
+            "memory_size": 512,
+            "role": "@role",
+            "timeout": 30
+        },
+        "access": {
+            "type": "@lambda.function",
+            "description": "The unauthenticated access lambda for login",
+            "layers": [
+              "@layer"
+            ],
+            "memory_size": 512,
+            "role": "@role",
+            "timeout": 30
+        },
+        "api_lambda": {
+            "type": "@lambda.function",
+            "description": "Dogs Mobile App Logic",
+            "timeout": 10,
+            "role": "@role",
+            "environment_variables": {
+                "table_name": "@table:props.name",
+                "s3_bucket_arn": "@bucket:props.arn"
             }
         },
-        "tutorial_policy": {
-            "type": "@iam.policy",
-            "description": "CloudKommand Tutorial Policy",
+        "unauth_api_lambda": {
+            "type": "@lambda.function",
+            "description": "Unauthenticated Dogs Mobile App Logic",
+            "timeout": 10,
+            "policies": ["@tutorial_policy"]
+        },
+        "role": {
+            "description": "Dogs Mobile App Lambda Role",
+            "policies": [
+                "@policy"
+            ],
+            "type": "@iam.role"
+        },
+        "policy": {
+            "description": "Dogs Mobile App Lambda Policy",
             "document": {
-                "Version": "2012-10-17",
-                "Statement": [{
-                    "Sid": "Vis",
-                    "Effect": "Allow",
-                    "Action": [
-                        "lambda:*",
-                        "events:*",
-                        "dynamodb:*",
-                        "sns:*"
-                    ],
-                    "Resource": "*"
-                }]
-            }
+              "Statement": [
+                {
+                  "Action": [
+                    "lambda:*",
+                    "sqs:*",
+                    "dynamodb:*",
+                    "s3:*",
+                    "ce:*",
+                    "sts:AssumeRole"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*",
+                  "Sid": "Vis"
+                }
+              ],
+              "Version": "2012-10-17"
+            },
+            "type": "@iam.policy"
         }
     },
     "repos": {
@@ -60,6 +106,7 @@
         "lambda": "https://github.com/cloudkommand/lambda",
         "dynamodb": "https://github.com/cloudkommand/dynamodb",
         "apigateway": "https://github.com/cloudkommand/apigateway",
-        "reactapp": "https://github.com/cloudkommand/reactapp"
+        "reactapp": "https://github.com/cloudkommand/reactapp",
+        "s3": "https://github.com/cloudkommand/s3"
     }
 }
