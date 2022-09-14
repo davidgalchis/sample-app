@@ -112,7 +112,6 @@
         "lambda": "https://github.com/cloudkommand/lambda",
         "dynamodb": "https://github.com/cloudkommand/dynamodb",
         "apigateway": "https://github.com/cloudkommand/apigateway",
-        "reactapp": "https://github.com/cloudkommand/reactapp",
         "s3": "https://github.com/cloudkommand/s3"
     }
 }
