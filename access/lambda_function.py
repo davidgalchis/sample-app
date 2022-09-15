@@ -1,12 +1,12 @@
 import json
 import boto3
 import boto
+from account import initiate_account_auth
+from util import lambda_env
 
 
 def lambda_handler(event, context):
-    """
-    Trades an access code for a session token
-    """
+
     headers = event['headers']
     content_type = headers.get("content-type") if headers else None
     bodystr = event.get('body')
@@ -34,26 +34,18 @@ def lambda_handler(event, context):
         return response
 
     body = json.loads(bodystr)
-    # Get username/password from bodu
+    # Get username/password from body
     username = body.get("username")
     password = body.get("password")
+    user_pool_id = lambda_env("user_pool_id")
+    app_client_id = lambda_env("app_client_id")
+    auth_response = initiate_account_auth(user_pool_id, app_client_id, username, password)
 
-
-
-    # github_code = body.get("github_code")
-
-    # if not github_code:
-    #     response = {
-    #         "statusCode":401,
-    #         "body":json.dumps({"error":"Github code not provided"})
-    #     }
-    #     return response
-
-    access_token, refresh_token = "", "" #authenticate_with_github2(github_code=github_code)
+    access_token, refresh_token = auth_response.get("access_token"), auth_response.get("refresh_token")
     if not access_token:
         response = {
             "statusCode":401,
-            "body":json.dumps({"error":"Access code invalid"})
+            "body":json.dumps({"error":"Username and/or password is invalid."})
         }
         return response
 

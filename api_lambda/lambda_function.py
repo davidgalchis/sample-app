@@ -2,9 +2,18 @@ import json
 import traceback
 import datetime
 
-from account import get_more_dogs, save_dog, list_saved_dogs
-from util import remove_none_attributes, random_id, dict_get_required, current_day
+from dogs import get_more_dogs, save_dog, list_saved_dogs
+from account import create_account_and_user
+from util import remove_none_attributes, random_id, dict_get_required, current_day, lambda_env
 
+
+def api_create_account_and_user(access_token=None, path_args=None, body=None):
+    user_pool_id = lambda_env("user_pool_id")
+    app_client_id = lambda_env("app_client_id")
+    name = dict_get_required(path_args or {}, "name", valuetype=str)
+    username = dict_get_required(path_args or {}, "username", valuetype=str)
+    password = dict_get_required(path_args or {}, "password", valuetype=str)
+    return create_account_and_user(user_pool_id, app_client_id, name, username, password)
 
 def api_get_more_dogs(access_token=None, path_args=None, body=None):
     amount = body.get("amount") or 20
@@ -30,7 +39,8 @@ def api_list_saved_dogs(access_token=None, path_args=None, body=None):
 all_functions_mapped = {
     "get_more_dogs":api_get_more_dogs,
     "save_dog":api_save_dog,
-    "list_saved_dogs":api_list_saved_dogs
+    "list_saved_dogs":api_list_saved_dogs,
+    "create_account_and_user":api_create_account_and_user
 }
 
 def lambda_handler(event, context):

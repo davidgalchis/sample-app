@@ -3,3 +3,4 @@ jsonpath-rw
 aws-lambda-powertools
 fastjsonschema
 pyjwt
+jose

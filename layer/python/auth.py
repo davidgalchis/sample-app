@@ -9,6 +9,15 @@ REMAINING_CALLS = {
 }
 
 ACCOUNT_CALLS = {
+    "foundation": {
+        "api": {
+            "v1": {
+                "accounts": {
+                    "POST": "create_account_and_user"
+                }
+            }
+        }
+    },
     "user": {
        "api": {
             "v1": {

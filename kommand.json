@@ -36,13 +36,14 @@
             "description": "The authorizer for the API",
             "environment_variables": {
               "table_arn": "@table:props.arn",
-              "s3_bucket_arn": "@bucket:props.arn"
+              "s3_bucket_arn": "@bucket:props.arn",
+              "user_pool_id": "@user_pool:props.id"
             },
             "layers": [
               "@layer"
             ],
             "memory_size": 512,
-            "role": "@role",
+            "policies": ["@policy"],
             "timeout": 30
         },
         "access": {
@@ -52,7 +53,7 @@
               "@layer"
             ],
             "memory_size": 512,
-            "role": "@role",
+            "policies": ["@policy"],
             "timeout": 30,
             "environment_variables": {
                 "app_client_id": "@user_pool_client:props.id",
@@ -63,7 +64,7 @@
             "type": "@lambda.function",
             "description": "Dogs Mobile App Logic",
             "timeout": 10,
-            "role": "@role",
+            "policies": ["@policy"],
             "environment_variables": {
                 "table_name": "@table:props.name",
                 "s3_bucket_arn": "@bucket:props.arn",
@@ -77,11 +78,10 @@
             "description": "Unauthenticated Dogs Mobile App Logic",
             "memory_size": 256,
             "timeout": 30,
-            "role": "@role"
+            "policies": ["@policy"]
         },
         "layer": {
             "type": "@lambda.layer",
-            "compatible_runtimes": ["python3.9", "python3.8"],
             "requirements.txt": true
         },
         "user_pool": {
@@ -92,34 +92,32 @@
             "user_pool_id": "@user_pool:props.id",
             "access_token_expiration_minutes": 900
         },
-        "role": {
-            "description": "Dogs Mobile App Lambda Role",
-            "policies": [
-                "@policy"
-            ],
-            "type": "@iam.role"
-        },
         "policy": {
+            "type": "@iam.policy",
             "description": "Dogs Mobile App Lambda Policy",
             "document": {
               "Statement": [
                 {
-                  "Action": [
-                    "lambda:*",
-                    "sqs:*",
-                    "dynamodb:*",
-                    "s3:*",
-                    "ce:*",
-                    "sts:AssumeRole"
-                  ],
+                    "Action": ["s3:*"],
+                    "Effect": "Allow",
+                    "Resource": "@bucket:props.arn",
+                    "Sid": "s3BucketPermissions"
+                },
+                {
+                    "Action": ["dynamodb:*"],
+                    "Effect": "Allow",
+                    "Resource": "@table:props.arn",
+                    "Sid": "dynamodbTablePermissions"
+                },
+                {
+                  "Action": ["cognito-idp:*"],
                   "Effect": "Allow",
-                  "Resource": "*",
-                  "Sid": "Vis"
+                  "Resource": "@user_pool:props.arn",
+                  "Sid": "userPoolPermissions"
                 }
               ],
               "Version": "2012-10-17"
-            },
-            "type": "@iam.policy"
+            }
         }
     },
     "repos": {
