@@ -1,4 +1,6 @@
 import json
+import boto3
+import boto
 
 
 def lambda_handler(event, context):
@@ -32,7 +34,11 @@ def lambda_handler(event, context):
         return response
 
     body = json.loads(bodystr)
-    # Get cognito information from access_code
+    # Get username/password from bodu
+    username = body.get("username")
+    password = body.get("password")
+
+
 
     # github_code = body.get("github_code")
 

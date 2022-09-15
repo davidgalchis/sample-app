@@ -3,6 +3,7 @@ import traceback
 
 from auth import parse_permission_and_path_args_from_path
 from dogs import get_more_dogs
+from account import create_account_and_user
 from util import remove_none_attributes
 
 from aws_lambda_powertools import Logger
@@ -13,8 +14,14 @@ def api_get_more_dogs(access_token=None, path_args=None, body=None):
     amount = body.get("amount") or 20
     return get_more_dogs(amount)
 
+def api_create_account_and_user(access_token=None, path_args=None, body=None):
+    username = body.get("username")
+    password = body.get("password")
+    return create_account_and_user(username, password)
+
 all_functions_mapped = {
-    "get_more_dogs": api_get_more_dogs
+    "get_more_dogs": api_get_more_dogs,
+    "create_account_and_user": api_create_account_and_user
 }
 
 @logger.inject_lambda_context

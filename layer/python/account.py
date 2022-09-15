@@ -8,6 +8,7 @@ import random
 import json
 import time
 import fastjsonschema
+import boto3
 
 from datetime import datetime
 
@@ -71,3 +72,45 @@ def create_account(email, name):
     )
 
     return convert_account_for_api(account_response)
+
+
+def create_account_and_user(user_pool_id, username, password):
+    """
+    Register a user
+
+    aws cognito-idp sign-up --region {your-aws-region} --client-id {your-client-id} --username admin@example.com --password password123
+
+    Confirm user registration
+
+    aws cognito-idp admin-confirm-sign-up --region {your-aws-region} --user-pool-id {your-user-pool-id} --username admin@example.com
+
+    Authenticate (get tokens)
+
+    aws cognito-idp admin-initiate-auth --region {your-aws-region} --cli-input-json file://auth.json
+    """
+    cognito = boto3.client('cognito-idp')
+
+    create_user_response = cognito.admin_create_user(
+        UserPoolId='string',
+        Username=username,
+        MessageAction='SUPPRESS',
+        ClientMetadata={
+            'string': 'string'
+        }
+    )
+    response = client.admin_confirm_sign_up(
+        UserPoolId='string',
+        Username='string',
+        ClientMetadata={
+            'string': 'string'
+        }
+    )
+
+
+    return None
+
+def initiate_account_auth(username, password):
+    return None
+
+def refresh_account_token(refresh_token):
+    return None

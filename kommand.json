@@ -53,7 +53,11 @@
             ],
             "memory_size": 512,
             "role": "@role",
-            "timeout": 30
+            "timeout": 30,
+            "environment_variables": {
+                "app_client_id": "@user_pool_client:props.id",
+                "app_client_secret": "@user_pool_client:props.secret"
+            }
         },
         "api_lambda": {
             "type": "@lambda.function",
@@ -62,7 +66,10 @@
             "role": "@role",
             "environment_variables": {
                 "table_name": "@table:props.name",
-                "s3_bucket_arn": "@bucket:props.arn"
+                "s3_bucket_arn": "@bucket:props.arn",
+                "user_pool_id": "@user_pool:props.id",
+                "app_client_id": "@user_pool_client:props.id",
+                "app_client_secret": "@user_pool_client:props.secret"
             }
         },
         "unauth_api_lambda": {
