@@ -115,22 +115,6 @@
             "type": "@iam.policy"
         }
     },
-    {
-        "components": {
-            "pool1baby": {
-                "type": "@cognito.user_pool",
-                "pre_sign_up_lambda_arn": "@tutorial_lambda:props.arn"
-            },
-            "client": {
-                "type": "@cognito.user_pool_client",
-                "user_pool_id": "@pool1baby:props.id",
-                "access_token_expiration_minutes": 900
-            },
-            "tutorial_lambda": {
-                "type": "@lambda.function"
-            }
-        },
-    }
     "repos": {
         "cognito": "https://github.com/cloudkommand/cognito",
         "iam": "https://github.com/cloudkommand/iam",
