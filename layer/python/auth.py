@@ -2,13 +2,7 @@ CALLS = {
     "unauth": {
         "api": {
             "v1": {
-                "dogs": {"GET": "get_more_dogs"}
-            }
-        }
-    },
-    "foundation": {
-        "api": {
-            "v1": {
+                "dogs": {"GET": "get_more_dogs"},
                 "accounts": {"POST": "create_account_and_user"}
             }
         }
@@ -37,7 +31,6 @@ def parse_permission_and_path_args_from_path(logger, path, user_scopes, account_
     """user_scopes object:
      {
         "user":true (optional),
-        "foundation":true (optional),
         "unauth": true (optional)
      }
     """
@@ -157,7 +150,7 @@ def parse_permission_and_path_args_from_path(logger, path, user_scopes, account_
     formatted_path = path.replace(remove_prefix, "", 1)
     logger.info("Non-account call")
     mapping = CALLS
-    scope = "user" if user_scopes.get("user") else "foundation"
+    scope = "user" if user_scopes.get("user") else "unauth"
     logger.info(f"scope={scope}")
 
     if not scope:

@@ -48,8 +48,8 @@ def lambda_handler(event, context):
     account_id = None
     if not token:
         account_id = "public"
-        user_scopes = {"foundation": True}
-        logger.info("No token, foundation scope")
+        user_scopes = {"unauth": True}
+        logger.info("No token, unauth scope")
 
     else:
         raw_split_path = path.split("/account/")
@@ -69,8 +69,8 @@ def lambda_handler(event, context):
 
             user_scopes = {"user": True}
         else:
-            logger.info("No account in path, foundation scope")   
-            user_scopes = {"foundation": True}
+            logger.info("No account in path, unauth scope")   
+            user_scopes = {"unauth": True}
 
 
     logger.info(user_scopes)
