@@ -1,4 +1,4 @@
-from util import stable_id, remove_none_attributes, remove_falsey_attributes, \
+from util import remove_none_attributes, remove_falsey_attributes, \
     base64_str, rev_base64_str
 import boto3
 import botocore
