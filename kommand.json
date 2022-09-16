@@ -12,7 +12,7 @@
                 "/api/v1/access": {
                   "ANY": "@access"
                 },
-                "/api/v1/more_dogs": {
+                "/api/v1/dogs": {
                   "ANY": "@unauth_api_lambda"
                 },
                 "/{proxy+}": {

@@ -24,8 +24,7 @@ ACCOUNT_CALLS = {
                         "save": {
                             "POST": "save_dog",
                             "GET": "list_saved_dogs"
-                        },
-                        "dogs": {"GET": "get_more_dogs"}
+                        }
                     }
                 },
                 "accounts": {"POST": "create_account_and_user"},
