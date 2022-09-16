@@ -1,14 +1,11 @@
-REMAINING_CALLS = {
+CALLS = {
     "unauth": {
         "api": {
             "v1": {
                 "dogs": {"GET": "get_more_dogs"}
             }
         }
-    }
-}
-
-ACCOUNT_CALLS = {
+    },
     "foundation": {
         "api": {
             "v1": {
@@ -38,7 +35,11 @@ ACCOUNT_CALLS = {
 
 def parse_permission_and_path_args_from_path(logger, path, user_scopes, account_id, method, remove_prefix="/live/"):
     """user_scopes object:
-     - account: user
+     {
+        "user":true (optional),
+        "foundation":true (optional),
+        "unauth": true (optional)
+     }
     """
 
     def recursive_allowed_check(remaining_path, sub_allowed_calls):
@@ -154,14 +155,9 @@ def parse_permission_and_path_args_from_path(logger, path, user_scopes, account_
 
     # Remove the undesired prefix, if exists
     formatted_path = path.replace(remove_prefix, "", 1)
-    if "/account/" in formatted_path:
-        logger.info("Account level call")
-        mapping = ACCOUNT_CALLS
-        scope = user_scopes.get("account")
-    else:
-        logger.info("Non-account call")
-        mapping = REMAINING_CALLS
-        scope = "unauth" if user_scopes.get("unauth") else "foundation"
+    logger.info("Non-account call")
+    mapping = CALLS
+    scope = "user" if user_scopes.get("user") else "foundation"
     logger.info(f"scope={scope}")
 
     if not scope:
