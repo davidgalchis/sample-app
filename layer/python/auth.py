@@ -12,9 +12,7 @@ ACCOUNT_CALLS = {
     "foundation": {
         "api": {
             "v1": {
-                "accounts": {
-                    "POST": "create_account_and_user"
-                }
+                "accounts": {"POST": "create_account_and_user"}
             }
         }
     },
@@ -29,7 +27,9 @@ ACCOUNT_CALLS = {
                         },
                         "dogs": {"GET": "get_more_dogs"}
                     }
-                }
+                },
+                "accounts": {"POST": "create_account_and_user"},
+                "refresh": {"POST": "refresh_token"},
             }
         }
     }
