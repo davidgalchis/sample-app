@@ -11,8 +11,10 @@ import boto3
 import jwt
 import urllib
 import base64
+import hashlib
 from jose import jwk
-
+import hmac
+import hashlib
 from datetime import datetime
 
 

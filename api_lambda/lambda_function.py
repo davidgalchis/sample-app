@@ -3,17 +3,33 @@ import traceback
 import datetime
 
 from dogs import get_more_dogs, save_dog, list_saved_dogs
-from account import create_account_and_user
+from account import create_account_and_user, refresh_account_token, get_jwt_public_keys, is_access_token_valid
 from util import remove_none_attributes, random_id, dict_get_required, current_day, lambda_env
 
+
+user_pool_id = lambda_env("user_pool_id")
+region = lambda_env("AWS_REGION")
+jwt_keys = get_jwt_public_keys(user_pool_id, region)
+
+
+def api_refresh_token(access_token=None, path_args=None, body=None):
+    user_pool_id = lambda_env("user_pool_id")
+    app_client_id = lambda_env("app_client_id")
+    app_client_secret = lambda_env("app_client_secret")
+    refresh_token = dict_get_required(path_args or {}, "refresh_token", valuetype=str)
+
+    claims = is_access_token_valid(access_token, jwt_keys, app_client_id, user_pool_id, region)
+    username = dict_get_required(claims or {}, "username", valuetype=str)
+
+    return refresh_account_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username)
 
 def api_create_account_and_user(access_token=None, path_args=None, body=None):
     user_pool_id = lambda_env("user_pool_id")
     app_client_id = lambda_env("app_client_id")
     name = dict_get_required(path_args or {}, "name", valuetype=str)
-    username = dict_get_required(path_args or {}, "username", valuetype=str)
+    email = dict_get_required(path_args or {}, "email", valuetype=str)
     password = dict_get_required(path_args or {}, "password", valuetype=str)
-    return create_account_and_user(user_pool_id, app_client_id, name, username, password)
+    return create_account_and_user(user_pool_id, app_client_id, name, email, password)
 
 def api_get_more_dogs(access_token=None, path_args=None, body=None):
     amount = body.get("amount") or 20
@@ -40,7 +56,8 @@ all_functions_mapped = {
     "get_more_dogs":api_get_more_dogs,
     "save_dog":api_save_dog,
     "list_saved_dogs":api_list_saved_dogs,
-    "create_account_and_user":api_create_account_and_user
+    "create_account_and_user":api_create_account_and_user,
+    "refresh_token": api_refresh_token
 }
 
 def lambda_handler(event, context):
