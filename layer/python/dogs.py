@@ -2,7 +2,7 @@ from basics import table_name, \
      RTYPE_SAVED_DOGS, calc_saved_dogs_pkey, calc_saved_dogs_skey
 from dynamodb import upsert_rec, get_recs_and_token, get_rec, delete_rec, upsert_rec_robust
 from util import convert_recs_for_api, random_id, current_epoch_time_usec_str, \
-    stable_id, remove_none_attributes, json_loader, current_epoch_time_usec_num
+    remove_none_attributes, json_loader, current_epoch_time_usec_num
 import botocore
 import random
 import json

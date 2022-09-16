@@ -27,7 +27,7 @@ ACCOUNT_CALLS = {
                         }
                     }
                 },
-                "accounts": {"POST": "create_account_and_user"},
+                "dogs": {"GET": "get_more_dogs"},
                 "refresh": {"POST": "refresh_token"},
             }
         }
