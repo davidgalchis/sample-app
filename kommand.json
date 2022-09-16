@@ -52,9 +52,7 @@
         "access": {
             "type": "@lambda.function",
             "description": "The unauthenticated access lambda for login",
-            "layers": [
-              "@layer"
-            ],
+            "layers": ["@layer"],
             "memory_size": 512,
             "policies": ["@policy"],
             "timeout": 30,
@@ -69,6 +67,7 @@
             "description": "Dogs Mobile App Logic",
             "timeout": 10,
             "policies": ["@policy"],
+            "layers": ["@layer"],
             "environment_variables": {
                 "table_name": "@table:props.name",
                 "s3_bucket_arn": "@bucket:props.arn",
@@ -82,7 +81,8 @@
             "description": "Unauthenticated Dogs Mobile App Logic",
             "memory_size": 256,
             "timeout": 30,
-            "policies": ["@policy"]
+            "policies": ["@policy"],
+            "layers": ["@layer"]
         },
         "layer": {
             "type": "@lambda.layer",
