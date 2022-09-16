@@ -15,6 +15,9 @@
                 "/api/v1/dogs": {
                   "ANY": "@unauth_api_lambda"
                 },
+                "/api/v1/accounts": {
+                    "POST": "@unauth_api_lambda"
+                  },
                 "/{proxy+}": {
                   "ANY": [
                     "@api_lambda:props.arn",
