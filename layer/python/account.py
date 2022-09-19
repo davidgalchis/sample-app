@@ -79,7 +79,7 @@ def create_account(email, name):
     return convert_account_for_api(account_response)
 
 
-def create_account_and_user(user_pool_id, app_client_id, name, username, password):
+def create_account_and_user(user_pool_id, app_client_id, app_client_secret, name, username, password):
 
     temp_password = random_id()+"aA1!"
 
@@ -114,7 +114,7 @@ def create_account_and_user(user_pool_id, app_client_id, name, username, passwor
     #     UserPoolId=user_pool_id,
     #     Username=actual_username
     # )
-    initiate_auth_response = initiate_account_auth(user_pool_id, app_client_id, username, password)
+    initiate_auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password)
     create_account_response = create_account(username, name)
 
     return initiate_auth_response.get("AuthenticationResult")
@@ -128,7 +128,7 @@ def get_jwt_public_keys(user_pool_id, region):
     return keys
     
 
-def initiate_account_auth(user_pool_id, app_client_id, username, password):
+def initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password):
     cognito = boto3.client('cognito-idp')
     initiate_auth_response = cognito.admin_initiate_auth(
         UserPoolId=user_pool_id,
@@ -136,7 +136,8 @@ def initiate_account_auth(user_pool_id, app_client_id, username, password):
         AuthFlow='ADMIN_NO_SRP_AUTH',
         AuthParameters={
             "USERNAME": username,
-            "PASSWORD": password
+            "PASSWORD": password,
+            'SECRET_HASH': calculate_secret_hash(app_client_id, app_client_secret, username)
         }
     )
     return initiate_auth_response

@@ -17,10 +17,11 @@ def api_get_more_dogs(access_token=None, path_args=None, body=None):
 def api_create_account_and_user(access_token=None, path_args=None, body=None):
     user_pool_id = lambda_env("user_pool_id")
     app_client_id = lambda_env("app_client_id")
+    app_client_secret = lambda_env("app_client_secret")
     name = dict_get_required(body or {}, "name", valuetype=str)
     email = dict_get_required(body or {}, "email", valuetype=str)
     password = dict_get_required(body or {}, "password", valuetype=str)
-    return create_account_and_user(user_pool_id, app_client_id, name, email, password)
+    return create_account_and_user(user_pool_id, app_client_id, app_client_secret, name, email, password)
 
 all_functions_mapped = {
     "get_more_dogs": api_get_more_dogs,
