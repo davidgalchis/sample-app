@@ -39,7 +39,8 @@ def lambda_handler(event, context):
     password = body.get("password")
     user_pool_id = lambda_env("user_pool_id")
     app_client_id = lambda_env("app_client_id")
-    auth_response = initiate_account_auth(user_pool_id, app_client_id, username, password)
+    app_client_secret = lambda_env("app_client_secret")
+    auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password)
 
     access_token, refresh_token = auth_response.get("access_token"), auth_response.get("refresh_token")
     if not access_token:

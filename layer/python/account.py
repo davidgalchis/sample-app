@@ -26,6 +26,7 @@ def convert_account_for_api(recs):
             "displayname": rec.get("displayname"),
             "name": rec.get("name"),
             "email": rec.get("email"),
+            "username": rec.get("username"),
             "created": rec.get("created"),
             "updated": rec.get("updated")
         })
@@ -47,7 +48,7 @@ def get_account(account_id, consistent_read=False):
 
     return convert_account_for_api(rec)
 
-def create_account(email, name):
+def create_account(username, email, name):
 
     create_time = current_epoch_time_usec_str()
 
@@ -60,6 +61,7 @@ def create_account(email, name):
         "pkey": pkey,
         "skey": skey,
         "displayname": name,
+        "username": username,
         "email": email,
         "name": name,
         "rtype": RTYPE_ACCOUNT,
@@ -79,7 +81,7 @@ def create_account(email, name):
     return convert_account_for_api(account_response)
 
 
-def create_account_and_user(user_pool_id, app_client_id, app_client_secret, name, username, password):
+def create_account_and_user(user_pool_id, app_client_id, app_client_secret, name, username, email, password):
 
     temp_password = random_id()+"aA1!"
 
@@ -97,7 +99,7 @@ def create_account_and_user(user_pool_id, app_client_id, app_client_secret, name
             },
             {
                 'Name': 'email',
-                'Value': username
+                'Value': email
             }
         ]
     )
