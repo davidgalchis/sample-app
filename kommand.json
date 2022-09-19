@@ -1,6 +1,6 @@
 {
     "components": {
-        "table": {
+        "table1": {
             "type": "@dynamodb.table",
             "skey_name":"skey"
         },
