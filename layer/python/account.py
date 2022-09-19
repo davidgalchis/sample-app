@@ -85,11 +85,11 @@ def create_account_and_user(user_pool_id, app_client_id, name, username, passwor
 
     cognito = boto3.client('cognito-idp')
 
-    temp_username = username.split("@")[0]
+    actual_username = username.split("@")[0]
 
     create_user_response = cognito.admin_create_user(
         UserPoolId=user_pool_id,
-        Username=temp_username,
+        Username=actual_username,
         TemporaryPassword=temp_password,
         MessageAction='SUPPRESS',
         UserAttributes=[
@@ -106,13 +106,13 @@ def create_account_and_user(user_pool_id, app_client_id, name, username, passwor
 
     set_password_response = cognito.admin_set_user_password(
         UserPoolId=user_pool_id,
-        Username=temp_username,
+        Username=actual_username,
         Password=password,
         Permanent=True
     )
     confirm_response = cognito.admin_confirm_sign_up(
         UserPoolId=user_pool_id,
-        Username=temp_username
+        Username=actual_username
     )
     initiate_auth_response = initiate_account_auth(user_pool_id, app_client_id, username, password)
     create_account_response = create_account(username, name)
