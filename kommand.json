@@ -1,7 +1,8 @@
 {
     "components": {
         "table": {
-            "type": "@dynamodb.table"
+            "type": "@dynamodb.table",
+            "skey_name":"skey"
         },
         "bucket": {
             "type": "@s3.bucket"
