@@ -99,7 +99,8 @@
         "user_pool_client": {
             "type": "@cognito.user_pool_client",
             "user_pool_id": "@user_pool:props.id",
-            "access_token_expiration_minutes": 900
+            "access_token_expiration_minutes": 900,
+            "auth_flows": ["ALLOW_CUSTOM_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_ADMIN_USER_PASSWORD_AUTH"]
         },
         "policy": {
             "type": "@iam.policy",
