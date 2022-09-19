@@ -110,10 +110,10 @@ def create_account_and_user(user_pool_id, app_client_id, name, username, passwor
         Password=password,
         Permanent=True
     )
-    confirm_response = cognito.admin_confirm_sign_up(
-        UserPoolId=user_pool_id,
-        Username=actual_username
-    )
+    # confirm_response = cognito.admin_confirm_sign_up(
+    #     UserPoolId=user_pool_id,
+    #     Username=actual_username
+    # )
     initiate_auth_response = initiate_account_auth(user_pool_id, app_client_id, username, password)
     create_account_response = create_account(username, name)
 
