@@ -42,9 +42,7 @@
               "s3_bucket_arn": "@bucket:props.arn",
               "user_pool_id": "@user_pool:props.id"
             },
-            "layers": [
-              "@layer"
-            ],
+            "layers": ["@layer"],
             "memory_size": 512,
             "policies": ["@policy"],
             "timeout": 30
@@ -57,9 +55,10 @@
             "policies": ["@policy"],
             "timeout": 30,
             "environment_variables": {
-                "user_pool_id": "@user_pool:props.id",
-                "app_client_id": "@user_pool_client:props.id",
-                "app_client_secret": "@user_pool_client:props.secret"
+              "table_name": "@table:props.name",
+              "user_pool_id": "@user_pool:props.id",
+              "app_client_id": "@user_pool_client:props.id",
+              "app_client_secret": "@user_pool_client:props.secret"
             }
         },
         "api_lambda": {
@@ -69,11 +68,11 @@
             "policies": ["@policy"],
             "layers": ["@layer"],
             "environment_variables": {
-                "table_name": "@table:props.name",
-                "s3_bucket_arn": "@bucket:props.arn",
-                "user_pool_id": "@user_pool:props.id",
-                "app_client_id": "@user_pool_client:props.id",
-                "app_client_secret": "@user_pool_client:props.secret"
+              "table_name": "@table:props.name",
+              "s3_bucket_arn": "@bucket:props.arn",
+              "user_pool_id": "@user_pool:props.id",
+              "app_client_id": "@user_pool_client:props.id",
+              "app_client_secret": "@user_pool_client:props.secret"
             }
         },
         "unauth_api_lambda": {
@@ -84,9 +83,10 @@
             "policies": ["@policy"],
             "layers": ["@layer"],
             "environment_variables": {
-                "user_pool_id": "@user_pool:props.id",
-                "app_client_id": "@user_pool_client:props.id",
-                "app_client_secret": "@user_pool_client:props.secret"
+              "table_name": "@table:props.name",
+              "user_pool_id": "@user_pool:props.id",
+              "app_client_id": "@user_pool_client:props.id",
+              "app_client_secret": "@user_pool_client:props.secret"
             }
         },
         "layer": {
