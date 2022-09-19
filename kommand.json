@@ -82,7 +82,11 @@
             "memory_size": 256,
             "timeout": 30,
             "policies": ["@policy"],
-            "layers": ["@layer"]
+            "layers": ["@layer"],
+            "environment_variables": {
+                "user_pool_id": "@user_pool:props.id",
+                "app_client_id": "@user_pool_client:props.id"
+            }
         },
         "layer": {
             "type": "@lambda.layer",
