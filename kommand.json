@@ -94,7 +94,8 @@
             "requirements.txt": true
         },
         "user_pool": {
-            "type": "@cognito.user_pool"
+            "type": "@cognito.user_pool",
+            "alias_attributes": ["phone_number","email"]
         },
         "user_pool_client": {
             "type": "@cognito.user_pool_client",
