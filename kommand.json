@@ -85,7 +85,8 @@
             "layers": ["@layer"],
             "environment_variables": {
                 "user_pool_id": "@user_pool:props.id",
-                "app_client_id": "@user_pool_client:props.id"
+                "app_client_id": "@user_pool_client:props.id",
+                "app_client_secret": "@user_pool_client:props.secret"
             }
         },
         "layer": {
