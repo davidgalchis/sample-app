@@ -115,7 +115,7 @@ def create_account_and_user(user_pool_id, app_client_id, app_client_secret, name
     #     Username=actual_username
     # )
     initiate_auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password)
-    create_account_response = create_account(username, name)
+    create_account_response = create_account(username, email, name)
 
     return initiate_auth_response.get("AuthenticationResult")
 
