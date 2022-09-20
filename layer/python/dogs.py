@@ -24,7 +24,7 @@ def convert_dogs_for_api(recs):
 
 def get_more_dogs(amount=20):
     r = requests.get(
-        f"https://dog.ceo/dog-api/documentation/random/{amount}"
+        f"https://dog.ceo/api/breeds/image/random/{amount}"
     )
     print(r)
     response_text = r.text
