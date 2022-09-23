@@ -1,6 +1,6 @@
 {
     "components": {
-        "table1": {
+        "table": {
             "type": "@dynamodb.table",
             "skey_name":"skey"
         },
@@ -39,7 +39,7 @@
             "type": "@lambda.function",
             "description": "The authorizer for the API",
             "environment_variables": {
-              "table_arn": "@table1:props.arn",
+              "table_arn": "@table:props.arn",
               "s3_bucket_arn": "@bucket:props.arn",
               "user_pool_id": "@user_pool:props.id"
             },
@@ -56,7 +56,7 @@
             "policies": ["@policy"],
             "timeout": 30,
             "environment_variables": {
-              "table_arn": "@table1:props.arn",
+              "table_arn": "@table:props.arn",
               "user_pool_id": "@user_pool:props.id",
               "app_client_id": "@user_pool_client:props.id",
               "app_client_secret": "@user_pool_client:props.secret"
@@ -69,7 +69,7 @@
             "policies": ["@policy"],
             "layers": ["@layer"],
             "environment_variables": {
-              "table_arn": "@table1:props.arn",
+              "table_arn": "@table:props.arn",
               "s3_bucket_arn": "@bucket:props.arn",
               "user_pool_id": "@user_pool:props.id",
               "app_client_id": "@user_pool_client:props.id",
@@ -84,7 +84,7 @@
             "policies": ["@policy"],
             "layers": ["@layer"],
             "environment_variables": {
-              "table_arn": "@table1:props.arn",
+              "table_arn": "@table:props.arn",
               "user_pool_id": "@user_pool:props.id",
               "app_client_id": "@user_pool_client:props.id",
               "app_client_secret": "@user_pool_client:props.secret"
@@ -117,7 +117,7 @@
                 {
                     "Action": ["dynamodb:*"],
                     "Effect": "Allow",
-                    "Resource": "@table1:props.arn",
+                    "Resource": "@table:props.arn",
                     "Sid": "dynamodbTablePermissions"
                 },
                 {
