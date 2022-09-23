@@ -26,9 +26,7 @@ def get_more_dogs(amount=20):
     r = requests.get(
         f"https://dog.ceo/api/breeds/image/random/{amount}"
     )
-    response_json = r.json()
-    response = json.loads(response_json)
-    print(response)
+    response = r.json()
     return convert_dogs_for_api(response.get("message", []))
 
 
