@@ -117,7 +117,7 @@ def create_account_and_user(user_pool_id, app_client_id, app_client_secret, name
     initiate_auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password)
     create_account_response = create_account(username, email, name)
 
-    return initiate_auth_response.get("AuthenticationResult")
+    return {"auth": initiate_auth_response.get("AuthenticationResult"), "account_id": create_account_response.get("account_id")}
 
 def get_jwt_public_keys(user_pool_id, region):
     keys_url = f"https://cognito-idp.{region}.amazonaws.com/{user_pool_id}/.well-known/jwks.json"
