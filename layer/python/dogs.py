@@ -26,13 +26,10 @@ def get_more_dogs(amount=20):
     r = requests.get(
         f"https://dog.ceo/api/breeds/image/random/{amount}"
     )
-    response_text = r.text
-    print(response_text)
-    print(type(response_text))
-    response = json.loads(response_text)
+    response_json = r.json()
+    response = json.loads(response_json)
     print(response)
-    print(type(response_text))
-    return convert_dogs_for_api(response_text.get("message", []))
+    return convert_dogs_for_api(response.get("message", []))
 
 
 def list_saved_dogs(account_id, amount=20, cursor=None):
