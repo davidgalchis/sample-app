@@ -28,9 +28,11 @@ def get_more_dogs(amount=20):
     )
     response_text = r.text
     print(response_text)
+    print(type(response_text))
     response = json.loads(response_text)
     print(response)
-    return convert_dogs_for_api(response.get("message", []))
+    print(type(response_text))
+    return convert_dogs_for_api(response_text.get("message", []))
 
 
 def list_saved_dogs(account_id, amount=20, cursor=None):
