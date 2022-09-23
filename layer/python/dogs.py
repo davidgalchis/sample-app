@@ -22,6 +22,17 @@ def convert_dogs_for_api(recs):
 
     return convert_recs_for_api(recs, transform)
 
+
+def convert_dog_list_for_api(recs):
+    def transform(rec):
+
+        return remove_none_attributes({
+            "dog_url": rec.get("dog_url"),
+            "created": rec.get("created")
+        })
+
+    return convert_recs_for_api(recs, transform)
+
 def get_more_dogs(amount=20):
     r = requests.get(
         f"https://dog.ceo/api/breeds/image/random/{amount}"
