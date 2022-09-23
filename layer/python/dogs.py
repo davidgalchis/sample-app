@@ -27,7 +27,8 @@ def get_more_dogs(amount=20):
         f"https://dog.ceo/api/breeds/image/random/{amount}"
     )
     response = r.json()
-    return convert_dogs_for_api(json.loads(response.get("message")) or [])
+    dog_list = [{"dog_url": item } for item in (response.get("message") or [])]
+    return convert_dogs_for_api(dog_list)
 
 
 def list_saved_dogs(account_id, amount=20, cursor=None):
