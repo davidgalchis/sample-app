@@ -23,23 +23,12 @@ def convert_dogs_for_api(recs):
     return convert_recs_for_api(recs, transform)
 
 
-def convert_dog_list_for_api(recs):
-    def transform(rec):
-
-        return remove_none_attributes({
-            "dog_url": rec.get("dog_url"),
-            "created": rec.get("created")
-        })
-
-    return convert_recs_for_api(recs, transform)
-
 def get_more_dogs(amount=20):
     r = requests.get(
         f"https://dog.ceo/api/breeds/image/random/{amount}"
     )
     response = r.json()
-    dog_list = [{"dog_url": item } for item in (response.get("message") or [])]
-    return convert_dogs_for_api(dog_list)
+    return response.get("message") or []
 
 
 def list_saved_dogs(account_id, amount=20, cursor=None):
