@@ -1,6 +1,5 @@
 import json
 import boto3
-import boto
 from account import initiate_account_auth, get_account_by_username
 from util import lambda_env
 
