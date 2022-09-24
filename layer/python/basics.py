@@ -2,6 +2,7 @@ from util import encode_internal_id, lambda_env
 
 RTYPE_ACCOUNT = "A"
 RTYPE_SAVED_DOGS = "SD"
+RTYPE_USER = "U"
 
 def table_name():
     table_arn =  lambda_env('table_arn')
@@ -12,6 +13,12 @@ def calc_account_pkey():
 
 def calc_account_skey(account_id):
     return f"{RTYPE_ACCOUNT}*{encode_internal_id(account_id)}"
+
+def calc_account_alt1_pkey():
+    return f"{RTYPE_ACCOUNT}"
+
+def calc_account_alt1_skey(username):
+    return f"{RTYPE_ACCOUNT}*{encode_internal_id(username)}${RTYPE_USER}"
 
 def calc_saved_dogs_pkey(account_id):
     return f"{RTYPE_SAVED_DOGS}*{encode_internal_id(account_id)}${RTYPE_ACCOUNT}"

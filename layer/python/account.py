@@ -1,5 +1,5 @@
 from basics import calc_account_pkey, calc_account_skey, table_name, \
-    RTYPE_ACCOUNT
+    RTYPE_ACCOUNT, calc_account_alt1_pkey, calc_account_alt1_skey
 from dynamodb import upsert_rec, get_recs_and_token, get_rec, delete_rec, upsert_rec_robust
 from util import convert_recs_for_api, random_id, current_epoch_time_usec_str, \
     remove_none_attributes, json_loader, current_epoch_time_usec_num
@@ -48,6 +48,21 @@ def get_account(account_id, consistent_read=False):
 
     return convert_account_for_api(rec)
 
+def get_account_by_username(username, consistent_read=False):
+    pkey = calc_account_pkey()
+    skey = calc_account_skey(username)
+
+    rec = get_rec(
+        table_name=table_name(),
+        pkey_name="pkey",
+        pkey_value=pkey,
+        skey_name="skey",
+        skey_value=skey,
+        consistent_read=consistent_read
+    )
+
+    return convert_account_for_api(rec)
+
 def create_account(username, email, name):
 
     create_time = current_epoch_time_usec_str()
@@ -56,10 +71,14 @@ def create_account(username, email, name):
 
     pkey = calc_account_pkey()
     skey = calc_account_skey(account_id=account_id)
+    alt1_pkey = calc_account_alt1_pkey()
+    alt1_skey = calc_account_alt1_skey(username)
 
     rec_values = {
         "pkey": pkey,
         "skey": skey,
+        "alt1_pkey": alt1_pkey,
+        "alt1_skey": alt1_skey,
         "displayname": name,
         "username": username,
         "email": email,

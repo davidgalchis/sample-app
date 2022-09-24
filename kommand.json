@@ -2,7 +2,13 @@
     "components": {
         "table": {
             "type": "@dynamodb.table",
-            "skey_name":"skey"
+            "skey_name":"skey",
+            "gsis": {
+              "alt1": {
+                  "pkey_name": "alt1_pkey",
+                  "skey_name": "alt1_skey"
+              }
+            }
         },
         "bucket": {
             "type": "@s3.bucket"
