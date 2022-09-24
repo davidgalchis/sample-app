@@ -1,7 +1,7 @@
 import json
 import boto3
 import boto
-from account import initiate_account_auth
+from account import initiate_account_auth, get_account_by_username
 from util import lambda_env
 
 
@@ -51,8 +51,9 @@ def lambda_handler(event, context):
         return response
 
     else:
+        account_response = get_account_by_username(username)
         response = {
             "statusCode":200,
-            "body":json.dumps({"access_token":access_token, "refresh_token": refresh_token})
+            "body":json.dumps({"access_token":access_token, "refresh_token": refresh_token, "account_id": account_response.get("account_id")})
         }
         return response
