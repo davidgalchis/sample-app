@@ -1,4 +1,6 @@
 import json
+from os import access
+import re
 import boto3
 from account import initiate_account_auth, get_account_by_username
 from util import lambda_env
@@ -40,8 +42,11 @@ def lambda_handler(event, context):
     app_client_id = lambda_env("app_client_id")
     app_client_secret = lambda_env("app_client_secret")
     auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password).get("AuthenticationResult")
+    print(auth_response)
     auth_details = auth_response.get("AuthenticationResult", {})
+    print(auth_details)
     access_token, refresh_token = auth_details.get("AccessToken"), auth_response.get("RefreshToken")
+    print(access_token, refresh_token)
     if not access_token:
         response = {
             "statusCode":401,
