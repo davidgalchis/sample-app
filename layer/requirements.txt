@@ -2,5 +2,5 @@ requests
 jsonpath-rw
 aws-lambda-powertools
 fastjsonschema
-pyjwt
+PyJWT
 python-jose
