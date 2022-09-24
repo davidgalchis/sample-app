@@ -8,11 +8,10 @@ import json
 import time
 import fastjsonschema
 import boto3
-import jwt
 import urllib
 import base64
 import hashlib
-from jose import jwk
+from jose import jwk, jwt
 import hmac
 import hashlib
 from datetime import datetime
