@@ -191,7 +191,7 @@ def is_access_token_valid(access_token, keys, app_client_id, user_pool_id, regio
     # message and signature (encoded in base64)
     message, encoded_signature = str(access_token).rsplit('.', 1)
     # decode the signature
-    decoded_signature = base64.b64decode(encoded_signature.encode('utf-8'))
+    decoded_signature = base64.b64decode(encoded_signature.encode('utf-8') + b'==')
     # verify the signature
     if not public_key.verify(message.encode("utf8"), decoded_signature):
         print('Signature verification failed')
