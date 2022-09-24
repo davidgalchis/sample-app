@@ -15,6 +15,8 @@ from jose import jwk, jwt
 import hmac
 import hashlib
 from datetime import datetime
+from jose.utils import base64url_decode
+import urllib.request
 
 
 def convert_account_for_api(recs):
@@ -160,7 +162,8 @@ def initiate_account_auth(user_pool_id, app_client_id, app_client_secret, userna
     )
     return initiate_auth_response
 
-def is_access_token_valid(access_token, keys, app_client_id, user_pool_id, region):
+def is_access_token_valid(access_token, keys, app_client_id, user_pool_id,
+                          region):
     """
     Verification requirements
     - Get the public keys
@@ -191,9 +194,9 @@ def is_access_token_valid(access_token, keys, app_client_id, user_pool_id, regio
     # message and signature (encoded in base64)
     message, encoded_signature = str(access_token).rsplit('.', 1)
     # decode the signature
-    decoded_signature = base64.b64decode(encoded_signature.encode('utf-8') + b'==')
+    decoded_signature = base64url_decode(encoded_signature.encode('utf-8') + b'==')
     # verify the signature
-    if not public_key.verify(message.encode("utf8"), decoded_signature):
+    if not public_key.verify(message.encode("utf-8"), decoded_signature):
         print('Signature verification failed')
         return False
     print('Signature successfully verified')
@@ -209,7 +212,8 @@ def is_access_token_valid(access_token, keys, app_client_id, user_pool_id, regio
         print('Token was not issued for this audience')
         return False
     # and the issuer (use claims['iss'] if verifying an access token)
-    if claims['iss'] != f"https://cognito-idp.{region}.amazonaws.com/{user_pool_id}":
+    if claims[
+            'iss'] != f"https://cognito-idp.{region}.amazonaws.com/{user_pool_id}":
         print('Token was not issued by this user pool')
         return False
     # now we can use the claims
