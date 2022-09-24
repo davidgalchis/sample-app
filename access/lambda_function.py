@@ -39,10 +39,9 @@ def lambda_handler(event, context):
     user_pool_id = lambda_env("user_pool_id")
     app_client_id = lambda_env("app_client_id")
     app_client_secret = lambda_env("app_client_secret")
-    print(user_pool_id, app_client_id, app_client_secret, username, password)
-    auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password)
-    print(auth_response)
-    access_token, refresh_token = auth_response.get("access_token"), auth_response.get("refresh_token")
+    auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password).get("AuthenticationResult")
+    auth_details = auth_response.get("AuthenticationResult", {})
+    access_token, refresh_token = auth_details.get("AccessToken"), auth_response.get("RefreshToken")
     if not access_token:
         response = {
             "statusCode":401,
