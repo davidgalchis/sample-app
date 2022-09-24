@@ -41,7 +41,7 @@ def lambda_handler(event, context):
     user_pool_id = lambda_env("user_pool_id")
     app_client_id = lambda_env("app_client_id")
     app_client_secret = lambda_env("app_client_secret")
-    auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password).get("AuthenticationResult")
+    auth_response = initiate_account_auth(user_pool_id, app_client_id, app_client_secret, username, password)
     print(auth_response)
     auth_details = auth_response.get("AuthenticationResult", {})
     print(auth_details)
