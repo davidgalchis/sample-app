@@ -123,7 +123,7 @@
                 {
                     "Action": ["dynamodb:*"],
                     "Effect": "Allow",
-                    "Resource": "@table:props.arn",
+                    "Resource": "*",
                     "Sid": "dynamodbTablePermissions"
                 },
                 {
