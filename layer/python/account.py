@@ -48,16 +48,16 @@ def get_account(account_id, consistent_read=False):
     return convert_account_for_api(rec)
 
 def get_account_by_username(username, consistent_read=False):
-    pkey = calc_account_pkey()
-    skey = calc_account_skey(username)
+    alt1_pkey = calc_account_alt1_pkey()
+    alt1_skey = calc_account_alt1_skey(username)
 
     rec = get_rec(
         table_name=table_name(),
-        pkey_name="pkey",
-        pkey_value=pkey,
-        skey_name="skey",
-        skey_value=skey,
-        consistent_read=consistent_read
+        pkey_name="alt1_pkey",
+        pkey_value=alt1_pkey,
+        skey_name="alt1_skey",
+        skey_value=alt1_skey,
+        index_name="alt1"
     )
 
     return convert_account_for_api(rec)
