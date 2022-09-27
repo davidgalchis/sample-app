@@ -98,8 +98,7 @@
         },
         "layer": {
             "type": "@lambda.layer",
-            "requirements.txt": true,
-            "t":"s"
+            "requirements.txt": true
         },
         "user_pool": {
             "type": "@cognito.user_pool"
