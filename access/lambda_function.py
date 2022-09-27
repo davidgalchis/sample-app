@@ -45,7 +45,7 @@ def lambda_handler(event, context):
     print(auth_response)
     auth_details = auth_response.get("AuthenticationResult", {})
     print(auth_details)
-    access_token, refresh_token = auth_details.get("AccessToken"), auth_response.get("RefreshToken")
+    access_token, refresh_token = auth_details.get("AccessToken"), auth_details.get("RefreshToken")
     print(access_token, refresh_token)
     if not access_token:
         response = {
