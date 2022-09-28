@@ -230,7 +230,7 @@ def calculate_secret_hash(client_id, client_secret, username):
 def refresh_account_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username):
     cognito = boto3.client('cognito-idp')
     refresh_response = cognito.initiate_auth(
-            UserPoolId=user_pool_id,
+            # UserPoolId=user_pool_id,
             ClientId=app_client_id,
             AuthFlow='REFRESH_TOKEN_AUTH',
             AuthParameters={
