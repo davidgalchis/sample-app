@@ -16,7 +16,7 @@ def api_refresh_token(access_token=None, path_args=None, body=None):
     user_pool_id = lambda_env("user_pool_id")
     app_client_id = lambda_env("app_client_id")
     app_client_secret = lambda_env("app_client_secret")
-    refresh_token = dict_get_required(path_args or {}, "refresh_token", valuetype=str)
+    refresh_token = dict_get_required(body or {}, "refresh_token", valuetype=str)
 
     claims = is_access_token_valid(access_token, jwt_keys, app_client_id, user_pool_id, region)
     username = dict_get_required(claims or {}, "username", valuetype=str)
