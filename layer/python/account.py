@@ -221,7 +221,7 @@ def is_access_token_valid(access_token, keys, app_client_id, user_pool_id,
     return claims
 
 # Function used to calculate SecretHash value for a given client
-def calculate_secret_hash(client_id, client_secret, username, device_key):
+def calculate_secret_hash(client_id, client_secret, username):
     key = bytes(client_secret, 'utf-8')
     message = bytes(f'{username}{client_id}', 'utf-8')
     return base64.b64encode(hmac.new(key, message, digestmod=hashlib.sha256).digest()).decode()
