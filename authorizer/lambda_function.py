@@ -28,7 +28,7 @@ def lambda_handler(event, context):
     path = event['rawPath']
     http_method = event.get("requestContext").get("http").get("method")
     
-    app_client_id = lambda_env("user_pool_id")
+    app_client_id = lambda_env("app_client_id")
 
     # Is this just an options call?
     if http_method == "OPTIONS":
