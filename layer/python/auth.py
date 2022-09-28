@@ -15,11 +15,10 @@ CALLS = {
                         "save": {
                             "POST": "save_dog",
                             "GET": "list_saved_dogs"
-                        }
+                        },
+                        "refresh": {"POST": "refresh_token"}
                     }
-                },
-                "dogs": {"GET": "get_more_dogs"},
-                "refresh": {"POST": "refresh_token"},
+                }
             }
         }
     }

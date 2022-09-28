@@ -124,7 +124,7 @@
                 {
                     "Action": ["dynamodb:*"],
                     "Effect": "Allow",
-                    "Resource": "*",
+                    "Resource": ["@table:props.arn", "@table:props.all_indexes_arn"],
                     "Sid": "dynamodbTablePermissions"
                 },
                 {
