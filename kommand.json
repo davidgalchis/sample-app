@@ -47,7 +47,8 @@
             "environment_variables": {
               "table_arn": "@table:props.arn",
               "s3_bucket_arn": "@bucket:props.arn",
-              "user_pool_id": "@user_pool:props.id"
+              "user_pool_id": "@user_pool:props.id",
+              "app_client_id": "@user_pool_client:props.id"
             },
             "layers": ["@layer"],
             "memory_size": 512,
