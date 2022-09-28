@@ -235,8 +235,8 @@ def refresh_account_token(user_pool_id, app_client_id, app_client_secret, refres
             AuthFlow='REFRESH_TOKEN_AUTH',
             AuthParameters={
                 'REFRESH_TOKEN': refresh_token,
-                'SECRET_HASH': calculate_secret_hash(app_client_id, app_client_secret, username)
-                # 'DEVICE_KEY': device_key
+                'SECRET_HASH': calculate_secret_hash(app_client_id, app_client_secret, username),
+                'DEVICE_KEY': device_key
                 # Note that SECRET_HASH is missing from JSDK
                 # Note also that DEVICE_KEY is missing from my example
             }
