@@ -221,13 +221,13 @@ def is_access_token_valid(access_token, keys, app_client_id, user_pool_id,
     return claims
 
 # Function used to calculate SecretHash value for a given client
-def calculate_secret_hash(client_id, client_secret, username):
+def calculate_secret_hash(client_id, client_secret, username, device_key):
     key = bytes(client_secret, 'utf-8')
     message = bytes(f'{username}{client_id}', 'utf-8')
     return base64.b64encode(hmac.new(key, message, digestmod=hashlib.sha256).digest()).decode()
 
 
-def refresh_account_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username):
+def refresh_account_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username, device_key):
     cognito = boto3.client('cognito-idp')
     refresh_response = cognito.initiate_auth(
             # UserPoolId=user_pool_id,
@@ -235,7 +235,8 @@ def refresh_account_token(user_pool_id, app_client_id, app_client_secret, refres
             AuthFlow='REFRESH_TOKEN_AUTH',
             AuthParameters={
                 'REFRESH_TOKEN': refresh_token,
-                'SECRET_HASH': calculate_secret_hash(app_client_id, app_client_secret, username)
+                'SECRET_HASH': calculate_secret_hash(app_client_id, app_client_secret, username),
+                'DEVICE_KEY': device_key
                 # Note that SECRET_HASH is missing from JSDK
                 # Note also that DEVICE_KEY is missing from my example
             }
