@@ -3,7 +3,7 @@ import traceback
 import datetime
 
 from dogs import get_more_dogs, save_dog, list_saved_dogs
-from account import create_account_and_user, refresh_account_token, get_jwt_public_keys, is_access_token_valid
+from account import create_account_and_user, refresh_access_token, get_jwt_public_keys, is_access_token_valid
 from util import remove_none_attributes, random_id, dict_get_required, current_day, lambda_env
 
 
@@ -22,7 +22,7 @@ def api_refresh_token(access_token=None, path_args=None, body=None):
     username = dict_get_required(claims or {}, "username", valuetype=str)
     # device_key = dict_get_required(claims or {}, "device_key", valuetype=str)
 
-    return refresh_account_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username)
+    return refresh_access_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username)
 
 def api_create_account_and_user(access_token=None, path_args=None, body=None):
     user_pool_id = lambda_env("user_pool_id")

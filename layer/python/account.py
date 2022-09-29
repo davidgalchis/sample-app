@@ -227,7 +227,7 @@ def calculate_secret_hash(client_id, client_secret, username):
     return base64.b64encode(hmac.new(key, message, digestmod=hashlib.sha256).digest()).decode()
 
 
-def refresh_account_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username):
+def refresh_access_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username):
     cognito = boto3.client('cognito-idp')
     refresh_response = cognito.admin_initiate_auth(
             UserPoolId=user_pool_id,
@@ -240,5 +240,7 @@ def refresh_account_token(user_pool_id, app_client_id, app_client_secret, refres
                 # Note also that DEVICE_KEY is missing from my example
             }
         )
-    return refresh_response
+    auth_details = refresh_response.get("AuthenticationResult", {})
+    access_token = auth_details.get("AccessToken")
+    return {"access_token": access_token}
 
