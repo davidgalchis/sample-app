@@ -20,9 +20,9 @@ def api_refresh_token(access_token=None, path_args=None, body=None):
 
     claims = is_access_token_valid(access_token, jwt_keys, app_client_id, user_pool_id, region)
     username = dict_get_required(claims or {}, "username", valuetype=str)
-    device_key = dict_get_required(claims or {}, "device_key", valuetype=str)
+    # device_key = dict_get_required(claims or {}, "device_key", valuetype=str)
 
-    return refresh_account_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username, device_key)
+    return refresh_account_token(user_pool_id, app_client_id, app_client_secret, refresh_token, username)
 
 def api_create_account_and_user(access_token=None, path_args=None, body=None):
     user_pool_id = lambda_env("user_pool_id")
