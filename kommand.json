@@ -103,7 +103,7 @@
         },
         "user_pool": {
             "type": "@cognito.user_pool",
-            "remember_device": "ALWAYS"
+            "remember_device": "NEVER"
         },
         "user_pool_client": {
             "type": "@cognito.user_pool_client",
