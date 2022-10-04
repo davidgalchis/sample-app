@@ -119,7 +119,7 @@
                 {
                     "Action": ["s3:*"],
                     "Effect": "Allow",
-                    "Resource": "@bucket:props.arn",
+                    "Resource": ["@bucket:props.arn", "@bucket:props.all_objects_arn"],
                     "Sid": "s3BucketPermissions"
                 },
                 {
