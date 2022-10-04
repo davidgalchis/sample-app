@@ -40,8 +40,9 @@ def api_get_more_dogs(access_token=None, path_args=None, body=None):
 
 def api_save_dog(access_token=None, path_args=None, body=None):
     account_id = dict_get_required(path_args or {}, "account_id", valuetype=str)
+    bucket_name = lambda_env("s3_bucket_name")
     dog_url = dict_get_required(body or {}, "dog_url", valuetype=str)
-    return save_dog(account_id, dog_url)
+    return save_dog(account_id, bucket_name, dog_url)
 
 def api_list_saved_dogs(access_token=None, path_args=None, body=None):
     account_id = dict_get_required(path_args or {}, "account_id", valuetype=str)
