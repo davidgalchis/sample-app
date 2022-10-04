@@ -1,0 +1,424 @@
+{
+	"info": {
+		"_postman_id": "7ae9d0c4-4b11-45c5-804f-5b28ba3b6231",
+		"name": "Mobile Dog App Backend Calls",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get_more_dogs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"list of dog picture urls retrieved\", function () { pm.expect(jsonData).to.be.an(\"array\"); });",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "amount",
+						"value": "21",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{api_id}}.execute-api.us-east-1.amazonaws.com/live/api/v1/dogs",
+					"protocol": "https",
+					"host": [
+						"{{api_id}}",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"live",
+						"api",
+						"v1",
+						"dogs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_account_and_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"account_id\", jsonData.account_id);",
+							"pm.collectionVariables.set(\"access_token\", jsonData.auth.AccessToken);",
+							"pm.collectionVariables.set(\"refresh_token\", jsonData.auth.RefreshToken);",
+							"",
+							"pm.test(\"account_id present\", function () { jsonData.hasOwnProperty(\"account_id\") });",
+							"pm.test(\"access_token present\", function () { jsonData.auth.hasOwnProperty(\"AccessToken\") });",
+							"pm.test(\"refresh_token present\", function () { jsonData.auth.hasOwnProperty(\"RefreshToken\") });",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"James Bond\",\n    \"username\": \"jbond\",\n    \"email\": \"james@bond.com\",\n    \"password\": \"Test@123\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api_id}}.execute-api.us-east-1.amazonaws.com/live/api/v1/accounts",
+					"protocol": "https",
+					"host": [
+						"{{api_id}}",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"live",
+						"api",
+						"v1",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save_dog",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful request to save dog picture\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dog_url\": \"https://images.dog.ceo/breeds/poodle-medium/PXL_20210220_100624962.jpg\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api_id}}.execute-api.us-east-1.amazonaws.com/live/api/v1/account/:account_id/save",
+					"protocol": "https",
+					"host": [
+						"{{api_id}}",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"live",
+						"api",
+						"v1",
+						"account",
+						":account_id",
+						"save"
+					],
+					"variable": [
+						{
+							"key": "account_id",
+							"value": "{{account_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_saved_dogs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful listing of saved dog picture urls\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+							"});",
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of saved dogs is greater than 1\", function () {",
+							"    pm.expect(jsonData.dogs.length > 1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{api_id}}.execute-api.us-east-1.amazonaws.com/live/api/v1/account/:account_id/save",
+					"protocol": "https",
+					"host": [
+						"{{api_id}}",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"live",
+						"api",
+						"v1",
+						"account",
+						":account_id",
+						"save"
+					],
+					"variable": [
+						{
+							"key": "account_id",
+							"value": "{{account_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "grant_access_to_existing_user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"account_id\", jsonData.account_id);",
+							"pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+							"pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);",
+							"",
+							"",
+							"pm.test(\"account_id present\", function () { jsonData.hasOwnProperty(\"account_id\") });",
+							"pm.test(\"new access_token present\", function () { jsonData.hasOwnProperty(\"access_token\") });",
+							"pm.test(\"new refresh_token present\", function () { jsonData.hasOwnProperty(\"refresh_token\") });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "amount",
+						"value": "21",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"jbond\",\n    \"password\": \"Test@123\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api_id}}.execute-api.us-east-1.amazonaws.com/live/api/v1/access",
+					"protocol": "https",
+					"host": [
+						"{{api_id}}",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"live",
+						"api",
+						"v1",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh_token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+							"",
+							"pm.test(\"new access_token present\", function () { jsonData.hasOwnProperty(\"access_token\") });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh_token\": \"{{refresh_token}}\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api_id}}.execute-api.us-east-1.amazonaws.com/live/api/v1/account/:account_id/refresh",
+					"protocol": "https",
+					"host": [
+						"{{api_id}}",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"live",
+						"api",
+						"v1",
+						"account",
+						":account_id",
+						"refresh"
+					],
+					"variable": [
+						{
+							"key": "account_id",
+							"value": "{{account_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_id",
+			"value": ""
+		}
+	]
+}
