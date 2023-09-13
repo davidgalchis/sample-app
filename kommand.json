@@ -5,7 +5,7 @@
             "subnets": ["subnet-092e302f6f1f00e0c", "subnet-050a81a45af1a87d8"],
             "security_groups": ["sg-0200f4b945bbafe7c"]
         },
-        "lb2": {
+        "lb3": {
             "security_groups": [
               "sg-0b5679bff68d6d4ab"
             ],
