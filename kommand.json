@@ -4,16 +4,6 @@
             "type": "@alb.load_balancer",
             "subnets": ["subnet-092e302f6f1f00e0c", "subnet-050a81a45af1a87d8"],
             "security_groups": ["sg-0200f4b945bbafe7c"]
-        },
-        "lb4": {
-            "security_groups": [
-              "sg-0b5679bff68d6d4ab"
-            ],
-            "subnets": [
-              "subnet-044cf046244b432b0",
-              "subnet-0b4ced526f6f55ebb"
-            ],
-            "type": "@alb.load_balancer"
         }
     },
     "repos": {
