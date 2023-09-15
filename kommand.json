@@ -1,6 +1,6 @@
 {
     "components": {
-        "listener": {
+        "listener2": {
             "type": "@alb.listener",
             "load_balancer_arn": "@load_balancer:props.arn",
             "certificate_arn": "arn:aws:acm:us-east-1:227993477930:certificate/f8332d41-2b84-4bf5-a25f-1ade065b14b5", 
