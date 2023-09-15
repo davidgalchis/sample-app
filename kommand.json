@@ -12,7 +12,7 @@
             "security_groups": ["sg-0200f4b945bbafe7c"]
         },
         "target_group": {
-            "type": "@alb_target_group.target_group",
+            "type": "@alb.target_group",
             "vpc_id": "vpc-0fdc08ec4975a0300"
         }
     },
