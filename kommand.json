@@ -1,10 +1,11 @@
 {
     "components": {
-        "listener2": {
+        "listener": {
             "type": "@alb.listener",
             "load_balancer_arn": "@load_balancer:props.arn",
             "certificate_arn": "arn:aws:acm:us-east-1:227993477930:certificate/f8332d41-2b84-4bf5-a25f-1ade065b14b5", 
-            "target_group_arn": "@target_group:props.arn"
+            "target_group_arn": "@target_group:props.arn",
+            "ssl_policy":"ELBSecurityPolicy-TLS13-1-2-Res-2021-06"
         },
         "load_balancer": {
             "type": "@alb.load_balancer",
