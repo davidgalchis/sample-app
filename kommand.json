@@ -1,35 +1,52 @@
 {
     "components": {
-        "tutorialui": {
-            "type": "@reactapp.spa",
-            "bundler": "webpack",
-            "config":{
-                "path":"src/config/config.js",
-                "data": {
-                    "cloudkommand_api": "https://api.cloudkommand.com",
-                    "backend_api_endpoint": "@tutorial_api:props.endpoint_with_stage",
-                    "discord_channel_url": "https://discord.com/channels/883179780575477821",
-                    "cloudkommand_url": "https://cloudkommand.com"
-                }
-            }
+        "domain": {
+            "type": "@route53.record",
+            "domain": "some.domain.com",
+            "target_cloudfront_domain_name": "@dist:props.domain_name"
         },
-        "tutorial_table": {
-            "type": "@dynamodb.table"
+        "dist": {
+            "type": "@cloudfront.distribution",
+            "aliases": [
+                "some.domain.com"
+            ],
+            "oai_id": "@oai:props.id",
+            "force_https": true,
+            "price_class": "100",
+            "allowed_methods": ["HEAD","GET","OPTIONS"]
         },
-        "tutorial_api": {
+        "oai": {
+            "type": "@cloudfront.oai",
+            "comment": "A origin access identity for some.domain.com"
+        },
+        "api": {
             "type": "@apigateway.api",
             "resources": {
-                "/{proxy+}": {
-                    "OPTIONS": "@tutorial_lambda:props.arn",
-                    "GET": "@tutorial_lambda:props.arn"
+                "/_server": {
+                    "/{proxy+}": {
+                        "OPTIONS": "@server_lambda:props.arn",
+                        "GET": "@server_lambda:props.arn"
+                    }
+                },
+                "/_image": {
+                    "/{proxy+}": {
+                        "OPTIONS": "@image_lambda:props.arn",
+                        "GET": "@image_lambda:props.arn"
+                    }
                 }
             },
-            "cors_enabled": true,
-            "something":"else"
+            "cors_enabled": true
         },
-        "tutorial_lambda": {
+        "server_lambda": {
             "type": "@lambda.function",
-            "description": "CloudKommand Tutorial Lambda",
+            "timeout": 10,
+            "policies": ["@tutorial_policy"],
+            "environment_variables": {
+                "table_name": "@tutorial_table:props.name"
+            }
+        },
+        "image_lambda": {
+            "type": "@lambda.function",
             "timeout": 10,
             "policies": ["@tutorial_policy"],
             "environment_variables": {
@@ -60,6 +77,7 @@
         "lambda": "https://github.com/cloudkommand/lambda",
         "dynamodb": "https://github.com/cloudkommand/dynamodb",
         "apigateway": "https://github.com/cloudkommand/apigateway",
-        "reactapp": "https://github.com/cloudkommand/reactapp"
+        "route53": "https://github.com/cloudkommand/route53"
+        "cloudfront": "https://github.com/cloudkommand/cloudfront"
     }
 }
