@@ -1,22 +1,10 @@
 {
     "components": {
-        "listener": {
-            "type": "@alb.listener",
-            "load_balancer_arn": "@load_balancer:props.arn",
-            "certificate_arn": "arn:aws:acm:us-east-1:227993477930:certificate/f8332d41-2b84-4bf5-a25f-1ade065b14b5", 
-            "target_group_arn": "@target_group:props.arn"
-        },
-        "load_balancer": {
-            "type": "@alb.load_balancer",
-            "subnets": ["subnet-092e302f6f1f00e0c", "subnet-050a81a45af1a87d8"],
-            "security_groups": ["sg-0200f4b945bbafe7c"]
-        },
-        "target_group": {
-            "type": "@alb.target_group",
-            "vpc_id": "vpc-0fdc08ec4975a0300"
+        "cache_policy": {
+            "type": "@cache_policy.cache_policy"
         }
     },
     "repos": {
-        "alb": "https://github.com/davidgalchis/alb"
+        "cache_policy": "https://github.com/davidgalchis/cache_policy"
     }
 }
