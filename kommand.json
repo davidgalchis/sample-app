@@ -1,11 +1,11 @@
 {
     "components": {
         "target_group": {
-            "type": "@alb_target_group.target_group",
+            "type": "@alb.target_group",
             "vpc_id": "vpc-0fdc08ec4975a0300"
         }
     },
     "repos": {
-        "alb_target_group": "https://github.com/davidgalchis/alb_target_group_org"
+        "alb": "https://github.com/davidgalchis/alb"
     }
 }
