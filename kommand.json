@@ -13,7 +13,63 @@
             "oai_id": "@oai:props.id",
             "force_https": true,
             "price_class": "100",
-            "allowed_methods": ["HEAD","GET","OPTIONS"]
+            "allowed_methods": ["HEAD","GET","OPTIONS"],
+            "target_domain_name": "@api:props.endpoint_with_stage",
+            "additional_behaviors": [
+
+
+                defaultBehavior: {
+                    origin: serverOrigin,
+                    allowedMethods: AllowedMethods.ALLOW_ALL,
+                    cachePolicy: serverCachePolicy,
+                    viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+                },
+                apigwServerPath: '/_server',
+            apigwImagePath: '/_image',
+                {
+                    "path_pattern": "/api*",
+                    "force_https": true,
+                    "target": "domain",
+                    "allowed_methods": ["HEAD", "GET", "OPTIONS", "PUT", "PATCH", "POST", "DELETE"],
+                    "cached_methods": ["HEAD", "GET"],
+                    "cache_policy_name": "CachingDisabled"
+                },
+                {
+                    "path_pattern": "/api*",
+                    "force_https": true,
+                    "target": "domain",
+                    "allowed_methods": ["HEAD", "GET", "OPTIONS", "PUT", "PATCH", "POST", "DELETE"],
+                    "cached_methods": ["HEAD", "GET"],
+                    "cache_policy_name": "CachingDisabled",
+                    "origin_request_policy_id": ,
+                    "response_headers_policy_id": ,
+                }
+                '/api*': {
+				...defaultOptions,
+				origin: customApiOrigin ?? serverOrigin,
+				allowedMethods: AllowedMethods.ALLOW_ALL,
+				cachePolicy: CachePolicy.CACHING_DISABLED,
+			},
+			'_next/data/*': {
+				...defaultOptions,
+				origin: serverOrigin,
+			},
+			'_next/image*': {
+				...defaultOptions,
+				origin: imageOrigin,
+				cachePolicy: imagesCachePolicy,
+				compress: true,
+			},
+			'_next/*': {
+				...defaultOptions,
+				origin: assetsOrigin,
+			},
+			'assets/*': {
+				...defaultOptions,
+				origin: assetsOrigin,
+				cachePolicy: assetsCachePolicy,
+			},
+            ]
         },
         "oai": {
             "type": "@cloudfront.oai",
