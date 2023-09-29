@@ -6,6 +6,18 @@
         },
         "tutorial_lambda": {
             "type": "@lambda.function"
+        },
+        "tutorial_lambda_1": {
+            "type": "@lambda.function"
+        },
+        "tutorial_lambda_2": {
+            "type": "@lambda.function"
+        },
+        "tutorial_lambda_3": {
+            "type": "@lambda.function"
+        },
+        "tutorial_lambda_4": {
+            "type": "@lambda.function"
         }
     },
     "repos": {
