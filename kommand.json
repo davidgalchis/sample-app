@@ -3,9 +3,13 @@
         "rule": {
             "type": "@eventbridge.rule",
             "schedule_expression": "rate(5 minutes)"
+        },
+        "tutorial_lambda": {
+            "type": "@lambda.function"
         }
     },
     "repos": {
-        "eventbridge": "https://github.com/davidgalchis/eventbridge"
+        "eventbridge": "https://github.com/davidgalchis/eventbridge",
+        "lambda": "https://github.com/cloudkommand/lambda"
     }
 }
