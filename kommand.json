@@ -24,7 +24,7 @@
         }
     },
     "repos": {
-        "eventbridge": "https://github.com/davidgalchis/eventbridge",
+        "eventbridge": "https://github.com/cloudkommand/eventbridge",
         "lambda": "https://github.com/cloudkommand/lambda",
         "sqs": "https://github.com/cloudkommand/sqs"
     }
