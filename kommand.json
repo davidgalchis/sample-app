@@ -4,6 +4,9 @@
             "type": "@eventbridge.rule",
             "schedule_expression": "rate(5 minutes)"
         },
+        "queue": {
+            "type": "@sqs.queue"
+        },
         "tutorial_lambda": {
             "type": "@lambda.function"
         },
@@ -22,6 +25,7 @@
     },
     "repos": {
         "eventbridge": "https://github.com/davidgalchis/eventbridge",
-        "lambda": "https://github.com/cloudkommand/lambda"
+        "lambda": "https://github.com/cloudkommand/lambda",
+        "sqs": "https://github.com/cloudkommand/sqs"
     }
 }
