@@ -11,69 +11,87 @@
                 "some.domain.com"
             ],
             "oai_id": "@oai:props.id",
-            "force_https": true,
             "price_class": "100",
             "allowed_methods": ["HEAD","GET","OPTIONS"],
-            "target_domain_name": "@api:props.endpoint_with_stage",
-            "additional_behaviors": [
-
-
-                defaultBehavior: {
-                    origin: serverOrigin,
-                    allowedMethods: AllowedMethods.ALLOW_ALL,
-                    cachePolicy: serverCachePolicy,
-                    viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+            "origins": {
+                "server": {
+                    "target_domain_name": "@api:props.endpoint_with_stage",
+                    "origin_path": "/_server",
+                    "force_https": true
                 },
-                apigwServerPath: '/_server',
-            apigwImagePath: '/_image',
+                "image": {
+                    "target_domain_name": "@api:props.endpoint_with_stage",
+                    "origin_path": "/_image",
+                    "force_https": true
+                },
+                "assets": {
+                    "target_s3_bucket": "@assets_bucket:props.name",
+                    "force_https": true
+                }
+            },
+            "cache_behaviors": [
+                {
+                    "default": true,
+                    "target_origin": "server",
+                    "allowed_methods": ["HEAD", "GET", "OPTIONS", "PUT", "PATCH", "POST", "DELETE"],
+                    "cache_policy_id": "@server_cache_policy:props.id",
+                    "force_https": true
+                },
                 {
                     "path_pattern": "/api*",
                     "force_https": true,
-                    "target": "domain",
+                    "target_origin": "server",
                     "allowed_methods": ["HEAD", "GET", "OPTIONS", "PUT", "PATCH", "POST", "DELETE"],
-                    "cached_methods": ["HEAD", "GET"],
                     "cache_policy_name": "CachingDisabled"
                 },
                 {
-                    "path_pattern": "/api*",
+                    "path_pattern": "_next/data/*",
                     "force_https": true,
-                    "target": "domain",
-                    "allowed_methods": ["HEAD", "GET", "OPTIONS", "PUT", "PATCH", "POST", "DELETE"],
-                    "cached_methods": ["HEAD", "GET"],
-                    "cache_policy_name": "CachingDisabled",
-                    "origin_request_policy_id": ,
-                    "response_headers_policy_id": ,
+                    "target_origin": "server",
+                    "allowed_methods": ["HEAD", "GET", "OPTIONS"]
+                },
+                {
+                    "path_pattern": "_next/image*",
+                    "force_https": true,
+                    "target_origin": "image",
+                    "allowed_methods": ["HEAD", "GET", "OPTIONS"],
+                    "cache_policy_id": "@image_cache_policy:props.id"
+                },
+                {
+                    "path_pattern": "_next/*",
+                    "force_https": true,
+                    "target_origin": "assets",
+                    "allowed_methods": ["HEAD", "GET", "OPTIONS"]
+                },
+                {
+                    "path_pattern": "assets/*",
+                    "force_https": true,
+                    "target_origin": "assets",
+                    "allowed_methods": ["HEAD", "GET", "OPTIONS"],
+                    "cache_policy_id": "@assets_cache_policy:props.id"
                 }
-                '/api*': {
-				...defaultOptions,
-				origin: customApiOrigin ?? serverOrigin,
-				allowedMethods: AllowedMethods.ALLOW_ALL,
-				cachePolicy: CachePolicy.CACHING_DISABLED,
-			},
-			'_next/data/*': {
-				...defaultOptions,
-				origin: serverOrigin,
-			},
-			'_next/image*': {
-				...defaultOptions,
-				origin: imageOrigin,
-				cachePolicy: imagesCachePolicy,
-				compress: true,
-			},
-			'_next/*': {
-				...defaultOptions,
-				origin: assetsOrigin,
-			},
-			'assets/*': {
-				...defaultOptions,
-				origin: assetsOrigin,
-				cachePolicy: assetsCachePolicy,
-			},
             ]
         },
         "oai": {
             "type": "@cloudfront.oai",
             "comment": "A origin access identity for some.domain.com"
+        },
+        "server_cache_policy": {
+            "type": "@cache_policy.cache_policy",
+            "header_behavior": "whitelist",
+            "headers": ["accept", "accept-language", "content-language", "content-type", "user-agent", "authorization"],
+            "query_string_behavior": "all",
+            "cookie_behavior": "all"
+        },
+        "image_cache_policy": {
+            "type": "@cache_policy.cache_policy",
+            "query_string_behavior": "all",
+            "default_ttl": 2592000
+        },
+        "assets_cache_policy": {
+            "type": "@cache_policy.cache_policy",
+            "query_string_behavior": "all",
+            "default_ttl": 43200
         },
         "api": {
             "type": "@apigateway.api",
@@ -81,13 +99,13 @@
                 "/_server": {
                     "/{proxy+}": {
                         "OPTIONS": "@server_lambda:props.arn",
-                        "GET": "@server_lambda:props.arn"
+                        "ANY": "@server_lambda:props.arn"
                     }
                 },
                 "/_image": {
                     "/{proxy+}": {
                         "OPTIONS": "@image_lambda:props.arn",
-                        "GET": "@image_lambda:props.arn"
+                        "ANY": "@image_lambda:props.arn"
                     }
                 }
             },
@@ -95,19 +113,32 @@
         },
         "server_lambda": {
             "type": "@lambda.function",
-            "timeout": 10,
+            "timeout": 20,
+            "memory_size": 1024,
+            "runtime": "nodejs16.x",
             "policies": ["@tutorial_policy"],
+            "handler":"index.handler",
             "environment_variables": {
-                "table_name": "@tutorial_table:props.name"
+                "NEXTJS_LAMBDA_BASE_PATH": "/_server"
             }
         },
+        "server_lambda_layer": {
+            "type": "@lambda.layer",
+            "folder": "server_lambda"
+        }
         "image_lambda": {
             "type": "@lambda.function",
             "timeout": 10,
+            "memory_size": 512,
+            "runtime": "python3.8",
             "policies": ["@tutorial_policy"],
+            "handler":"index.handler",
             "environment_variables": {
-                "table_name": "@tutorial_table:props.name"
+                "bucket_name": "@assets_bucket:props.name"
             }
+        },
+        "assets_bucket": {
+            "type": "@s3.bucket"
         },
         "tutorial_policy": {
             "type": "@iam.policy",
@@ -134,6 +165,7 @@
         "dynamodb": "https://github.com/cloudkommand/dynamodb",
         "apigateway": "https://github.com/cloudkommand/apigateway",
         "route53": "https://github.com/cloudkommand/route53"
-        "cloudfront": "https://github.com/cloudkommand/cloudfront"
+        "cloudfront": "https://github.com/cloudkommand/cloudfront",
+        "cache_policy": "https://github.com/davidgalchis/cache_policy"
     }
 }
