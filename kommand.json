@@ -4,7 +4,8 @@
             "type": "@lambda.function",
             "description": "CloudKommand Tutorial Lambda",
             "timeout": 10,
-            "policies": ["@my_policy"]
+            "policies": ["@my_policy"],
+            "keep_warm": true
         },
         "my_policy": {
             "type": "@iam.policy",
@@ -23,17 +24,7 @@
                     "Resource": "*"
                 }]
             }
-        },
-        "my_rule": {
-            "type": "@eventbridge.rule",
-            "name": "test1asdlfjasdflkjasdf",
-            "schedule_expression": "rate(5 minutes)",
-            "targets": {
-              "my_lambda": {
-                "arn": "@my_lambda:props.arn"
-              }
-            }
-          }
+        }
     },
     "repos": {
         "iam": "https://github.com/cloudkommand/iam",
