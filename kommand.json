@@ -30,7 +30,7 @@
             "schedule_expression": "rate(5 minutes)",
             "targets": {
               "my_lambda": {
-                "arn": "@my_lambda:props_arn"
+                "arn": "@my_lambda:props.arn"
               }
             }
           }
