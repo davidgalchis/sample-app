@@ -125,7 +125,7 @@
         "server_lambda_layer": {
             "type": "@lambda.layer",
             "folder": "server_lambda"
-        }
+        },
         "image_lambda": {
             "type": "@lambda.function",
             "timeout": 10,
@@ -164,7 +164,7 @@
         "lambda": "https://github.com/cloudkommand/lambda",
         "dynamodb": "https://github.com/cloudkommand/dynamodb",
         "apigateway": "https://github.com/cloudkommand/apigateway",
-        "route53": "https://github.com/cloudkommand/route53"
+        "route53": "https://github.com/cloudkommand/route53",
         "cloudfront": "https://github.com/cloudkommand/cloudfront",
         "cache_policy": "https://github.com/davidgalchis/cache_policy"
     }
