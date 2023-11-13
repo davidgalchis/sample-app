@@ -105,14 +105,14 @@
             "resources": {
                 "/_server": {
                     "/{proxy+}": {
-                        "OPTIONS": "@image_lambda:props.arn",
-                        "ANY": "@image_lambda:props.arn"
+                        "OPTIONS": "@tutorial_lambda:props.arn",
+                        "ANY": "@tutorial_lambda:props.arn"
                     }
                 },
                 "/_image": {
                     "/{proxy+}": {
-                        "OPTIONS": "@image_lambda:props.arn",
-                        "ANY": "@image_lambda:props.arn"
+                        "OPTIONS": "@tutorial_lambda:props.arn",
+                        "ANY": "@tutorial_lambda:props.arn"
                     }
                 }
             },
