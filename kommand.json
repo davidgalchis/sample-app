@@ -69,6 +69,13 @@
                     "target_origin": "assets",
                     "allowed_methods": ["HEAD", "GET", "OPTIONS"],
                     "cache_policy_id": "@assets_cache_policy:props.id"
+                },
+                {
+                    "path_pattern": "index.html",
+                    "cache_policy_name": "CachingDisabled",
+                    "force_https": true,
+                    "target_origin": "assets",
+                    "allowed_methods": ["HEAD", "GET", "OPTIONS"]
                 }
             ]
         },
@@ -98,8 +105,8 @@
             "resources": {
                 "/_server": {
                     "/{proxy+}": {
-                        "OPTIONS": "@server_lambda:props.arn",
-                        "ANY": "@server_lambda:props.arn"
+                        "OPTIONS": "@image_lambda:props.arn",
+                        "ANY": "@image_lambda:props.arn"
                     }
                 },
                 "/_image": {
@@ -111,28 +118,12 @@
             },
             "cors_enabled": true
         },
-        "server_lambda": {
-            "type": "@lambda.function",
-            "timeout": 20,
-            "memory_size": 1024,
-            "runtime": "nodejs16.x",
-            "policies": ["@tutorial_policy"],
-            "handler":"index.handler",
-            "environment_variables": {
-                "NEXTJS_LAMBDA_BASE_PATH": "/_server"
-            }
-        },
-        "server_lambda_layer": {
-            "type": "@lambda.layer",
-            "folder": "server_lambda"
-        },
-        "image_lambda": {
+        "tutorial_lambda": {
             "type": "@lambda.function",
             "timeout": 10,
             "memory_size": 512,
             "runtime": "python3.8",
             "policies": ["@tutorial_policy"],
-            "handler":"index.handler",
             "environment_variables": {
                 "bucket_name": "@assets_bucket:props.name"
             }
