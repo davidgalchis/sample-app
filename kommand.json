@@ -165,6 +165,7 @@
         "dynamodb": "https://github.com/cloudkommand/dynamodb",
         "apigateway": "https://github.com/cloudkommand/apigateway",
         "route53": "https://github.com/cloudkommand/route53",
+        "s3": "https://github.com/cloudkommand/s3",
         "cloudfront": "https://github.com/cloudkommand/cloudfront",
         "cache_policy": "https://github.com/davidgalchis/cache_policy"
     }
